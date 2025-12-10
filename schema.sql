@@ -69,3 +69,15 @@ CREATE TABLE reservasi (
     jumlah_kamar INT,
     total_malam INT
 );
+
+INSERT INTO users (email, password, role, no_telepon) VALUES
+('admin@example.com', '$2y$10$fW9N/yO.W/K3hG2.p5Ue.eA0zC7u4oR1iMv2tXqY3sZ4aB5c6d7e', 'admin', '081234567890'),
+('budi@mail.com', '$2y$10$hL5Z/tP.X/J4iH3.q6Vf.fB1aD8v5pS2jN3wXyZ4bC5d7e8f9g0h', 'user', '081345678901'),
+('cindy@mail.com', '$2y$10$jO2X/uQ.Y/L5jI4.r7Wg.gC2bD9w6qT3kN4xYzA5cC6d8e9f0g1i', 'user', '081456789012'),
+('dewi@mail.com', '$2y$10$kR7A/vR.Z/M6kJ5.s8Xh.hD3cE0x7rU4lO5zB6aD7e9f0g1h2j', 'user', '081567890123'),
+('eko@mail.com', '$2y$10$mL1T/wS.A/N7lK6.t9Yi.iD4dF1y8sV5mM6zC7bE8f9g0h1i3k', 'user', '081678901234'),
+('fajar@mail.com', '$2y$10$nW6Q/xT.B/O8mP7.u0Zj.jE5eG2z9tW6nN7aD8cE9f0g1h2j4l', 'user', '081789012345'),
+('gita@mail.com', '$2y$10$pY0U/yU.C/P9nQ8.v1Ak.kF6fH3a0uX7oO8bD9dF0g1h2j4l5m', 'user', '081890123456'),
+('heri@mail.com', '$2y$10$qZ4V/zV.D/Q0oR9.w2Bl.lG7gI4b1vY8pP9cE0fG1h2j4l5m6n', 'user', '081901234567'),
+('indah@mail.com', '$2y$10$rA8W/A W.E/R1pS0.x3Cm.mH8hJ5c2wZ9qQ0dF1gH2j4l5m6n7p', 'user', '081123456789'),
+('joko@mail.com', '$2y$10$sB2X/B X.F/S2qT1.y4Dn.nI9iK6d3xR0rR1eG2hJ4l5m6n7p8q', 'user', '081223456789');
