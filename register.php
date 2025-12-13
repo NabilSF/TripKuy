@@ -1,0 +1,497 @@
+<?php
+require 'koneksi.php';
+require 'jwt.php';
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['fullname'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    echo $password;
+    $password = $_POST['password'];
+
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $res = mysqli_query($conn, "INSERT INTO users(nama, email, password, role, no_telepon) VALUES ('$username', '$email', '$hashed_password', 'user', '$phone')");
+
+    if ($res) {
+        [$token, $options] = sign_jwt($conn->insert_id);
+        setcookie('token', $token, $options);
+        exit(200);
+    }
+    exit(400);
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TripKuy - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white">
+    <div class="min-h-screen flex">
+        <!-- Left Side - Register Form -->
+        <div class="w-full lg:w-1/2 flex flex-col">
+            <!-- Header -->
+            <header class="flex items-center justify-between px-8 py-6">
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-8 h-8 bg-black flex items-center justify-center rounded">
+                        <div class="text-white text-xl font-bold">≡</div>
+                    </div>
+                    <span class="text-2xl font-bold">TripKuy</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a
+                        href="./register.php"
+                        class="px-6 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition-colors">
+                        Register
+                    </a>
+                    <a
+                        href="./login.php"
+                        class="px-6 py-2 border-2 border-black text-black text-sm rounded-md hover:bg-gray-50 transition-colors">
+                        Login
+                    </a>
+                </div>
+            </header>
+
+            <!-- Register Form -->
+            <div class="flex-1 flex items-center justify-center px-8">
+                <div class="w-full max-w-md">
+                    <h1 class="text-4xl font-bold mb-3">Sign up</h1>
+                    <p class="text-gray-600 mb-8">
+                        If you already have an account<br />
+                        You can
+                        <a
+                            href="./login.php"
+                            class="text-blue-600 font-semibold hover:underline">Login here!</a>
+                    </p>
+
+                    <form id="registerForm" method="post" class="space-y-6">
+                        <!-- Nama Lengkap Input -->
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">Nama Lengkap</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-0 top-3 text-gray-400 text-lg">👤</span>
+                                <input
+                                    type="text"
+                                    name="fullname"
+                                    id="fullname"
+                                    placeholder="Enter your full name"
+                                    class="w-full pl-8 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    required />
+                            </div>
+                        </div>
+
+                        <!-- Email Input -->
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">Email</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-0 top-3 text-gray-400 text-lg">✉</span>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter your email address"
+                                    class="w-full pl-8 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    required />
+                            </div>
+                        </div>
+
+                        <!-- Nomor Telepon Input -->
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">Nomor Telepon</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-0 top-3 text-gray-400 text-lg">📱</span>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="Enter your phone number"
+                                    class="w-full pl-8 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    required
+                                    pattern="[0-9]+" />
+                            </div>
+                        </div>
+
+                        <!-- Password Input -->
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">Password</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-0 top-3 text-gray-400 text-lg">🔒</span>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Enter your Password"
+                                    class="w-full pl-8 pr-12 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    required />
+                                <button
+                                    type="button"
+                                    id="togglePassword"
+                                    class="absolute right-0 top-3 text-gray-400 hover:text-gray-600">
+                                    <svg
+                                        id="eyeIcon"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password Input -->
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">Confirm Password</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-0 top-3 text-gray-400 text-lg">🔒</span>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="password"
+                                    placeholder="Confirm your Password"
+                                    class="w-full pl-8 pr-12 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    required />
+                                <button
+                                    type="button"
+                                    id="toggleConfirmPassword"
+                                    class="absolute right-0 top-3 text-gray-400 hover:text-gray-600">
+                                    <svg
+                                        id="eyeIconConfirm"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Register Button -->
+                        <button
+                            type="submit"
+                            class="w-full py-4 bg-blue-600 text-white rounded-full font-semibold text-lg hover:bg-blue-700 transition-colors shadow-md">
+                            Register
+                        </button>
+
+                        <!-- Login Link -->
+                        <div class="text-center pt-2">
+                            <p class="text-sm text-gray-600">
+                                Already have an account?
+                                <a
+                                    href="./login.php"
+                                    class="text-blue-600 font-semibold hover:underline">Login here</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Illustration -->
+        <div
+            class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 via-blue-900 to-indigo-950 items-center justify-center p-12">
+            <div class="text-center">
+                <!-- Illustration -->
+                <div class="mb-12 relative">
+                    <svg
+                        viewBox="0 0 400 300"
+                        class="w-full max-w-lg mx-auto">
+                        <!-- Desk -->
+                        <rect
+                            x="50"
+                            y="180"
+                            width="300"
+                            height="15"
+                            fill="#4F46E5"
+                            rx="5" />
+
+                        <!-- Monitor -->
+                        <rect
+                            x="80"
+                            y="100"
+                            width="120"
+                            height="80"
+                            fill="#6B7280"
+                            rx="8" />
+                        <rect
+                            x="90"
+                            y="110"
+                            width="100"
+                            height="60"
+                            fill="#374151" />
+                        <rect
+                            x="130"
+                            y="180"
+                            width="20"
+                            height="15"
+                            fill="#6B7280" />
+                        <rect
+                            x="120"
+                            y="195"
+                            width="40"
+                            height="5"
+                            fill="#4F46E5"
+                            rx="2" />
+
+                        <!-- Person -->
+                        <circle cx="250" cy="130" r="25" fill="#FCA5A5" />
+                        <ellipse
+                            cx="245"
+                            cy="125"
+                            rx="3"
+                            ry="4"
+                            fill="#1F2937" />
+                        <ellipse
+                            cx="255"
+                            cy="125"
+                            rx="3"
+                            ry="4"
+                            fill="#1F2937" />
+                        <path
+                            d="M 245 135 Q 250 138 255 135"
+                            stroke="#1F2937"
+                            stroke-width="2"
+                            fill="none" />
+
+                        <!-- Hair -->
+                        <path
+                            d="M 230 120 Q 230 100 250 105 Q 270 100 270 120"
+                            fill="#8B5CF6" />
+                        <circle cx="245" cy="105" r="8" fill="#8B5CF6" />
+                        <circle cx="255" cy="105" r="8" fill="#8B5CF6" />
+
+                        <!-- Body -->
+                        <rect
+                            x="230"
+                            y="155"
+                            width="40"
+                            height="50"
+                            fill="#60A5FA"
+                            rx="8" />
+
+                        <!-- Arms -->
+                        <rect
+                            x="210"
+                            y="160"
+                            width="20"
+                            height="35"
+                            fill="#60A5FA"
+                            rx="8"
+                            transform="rotate(-20 220 170)" />
+                        <rect
+                            x="270"
+                            y="160"
+                            width="20"
+                            height="35"
+                            fill="#60A5FA"
+                            rx="8"
+                            transform="rotate(30 280 170)" />
+
+                        <!-- Hand waving -->
+                        <circle cx="295" cy="165" r="8" fill="#FCA5A5" />
+                        <path
+                            d="M 290 160 L 288 155 M 295 158 L 295 153 M 300 160 L 302 155"
+                            stroke="#FCA5A5"
+                            stroke-width="2"
+                            stroke-linecap="round" />
+
+                        <!-- Laptop -->
+                        <rect
+                            x="260"
+                            y="175"
+                            width="60"
+                            height="4"
+                            fill="#6B7280"
+                            rx="2" />
+                        <polygon
+                            points="260,179 320,179 315,200 265,200"
+                            fill="#374151" />
+                        <rect
+                            x="268"
+                            y="182"
+                            width="45"
+                            height="15"
+                            fill="#60A5FA" />
+
+                        <!-- Chair -->
+                        <rect
+                            x="235"
+                            y="205"
+                            width="30"
+                            height="8"
+                            fill="#4F46E5"
+                            rx="4" />
+                        <rect
+                            x="247"
+                            y="213"
+                            width="6"
+                            height="25"
+                            fill="#6B7280" />
+                        <circle cx="250" cy="245" r="12" fill="#4F46E5" />
+
+                        <!-- Plant -->
+                        <ellipse
+                            cx="100"
+                            cy="195"
+                            rx="10"
+                            ry="5"
+                            fill="#8B5CF6" />
+                        <path
+                            d="M 100 195 Q 95 185 98 175 Q 100 185 102 175 Q 105 185 100 195"
+                            fill="#10B981" />
+
+                        <!-- Coffee -->
+                        <rect
+                            x="310"
+                            y="175"
+                            width="20"
+                            height="25"
+                            fill="#EF4444"
+                            rx="3" />
+                        <ellipse
+                            cx="320"
+                            cy="173"
+                            rx="10"
+                            ry="3"
+                            fill="#DC2626" />
+                        <path
+                            d="M 330 183 Q 335 183 335 188 Q 335 193 330 193"
+                            stroke="#EF4444"
+                            stroke-width="2"
+                            fill="none" />
+                    </svg>
+                </div>
+
+                <!-- Text -->
+                <h2 class="text-4xl font-bold text-white mb-4">
+                    Sign up to name
+                </h2>
+                <p class="text-blue-200 text-lg">Lorem Ipsum is simply</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+        const eyeIcon = document.getElementById("eyeIcon");
+
+        togglePassword.addEventListener("click", function() {
+            const type =
+                passwordInput.getAttribute("type") === "password" ?
+                "text" :
+                "password";
+            passwordInput.setAttribute("type", type);
+
+            if (type === "text") {
+                eyeIcon.innerHTML =
+                    '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                eyeIcon.innerHTML =
+                    '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        });
+
+        // Toggle confirm password visibility
+        const toggleConfirmPassword = document.getElementById(
+            "toggleConfirmPassword"
+        );
+        const confirmPasswordInput =
+            document.getElementById("confirmPassword");
+        const eyeIconConfirm = document.getElementById("eyeIconConfirm");
+
+        toggleConfirmPassword.addEventListener("click", function() {
+            const type =
+                confirmPasswordInput.getAttribute("type") === "password" ?
+                "text" :
+                "password";
+            confirmPasswordInput.setAttribute("type", type);
+
+            if (type === "text") {
+                eyeIconConfirm.innerHTML =
+                    '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                eyeIconConfirm.innerHTML =
+                    '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        });
+
+        // Handle form submission
+        const registerForm = document.getElementById("registerForm");
+        registerForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const fullname = document.getElementById("fullname").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            // Validasi password match
+            if (password !== confirmPassword) {
+                alert("Password dan Confirm Password tidak sama!");
+                return;
+            }
+
+            console.log("Register attempt:", {
+                fullname,
+                email,
+                phone,
+                password,
+            });
+
+            // Di sini nanti bisa tambahkan logic untuk kirim data ke backend
+            // Setelah berhasil, bisa redirect ke login page
+            const formData = new FormData(e.target);
+            const res = await fetch("./register.php", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (res.status == 200) {
+                window.location.href = "dashboard.php"
+            } else {
+                console.log(res.statusText)
+            }
+        });
+    </script>
+</body>
+
+</html>
