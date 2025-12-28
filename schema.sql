@@ -15,12 +15,13 @@ CREATE TABLE users (
     no_telepon VARCHAR(16)
 );
 
-INSERT INTO `users` (`id_user`, `nama`, `email`, `password`, `role`, `no_telepon`) VALUES
-(1, 'Edward Newgate', 'edward@gmail.ac.id', 'hash_edward_123', 'admin', '081122334455'),
-(2, 'Kira Yamato', 'kira.yamato@gmail.com', 'hash_kira_001', 'user', '085700011122'),
-(3, 'Banager Links', 'banager@gmail.com', 'hash_banager_002', 'user', '081299988877'),
-(4, 'Andi Wijaya', 'andi.wijaya@gmail.com', 'hash_andi_003', 'user', '081344455566'),
-(5, 'Dewi Lestari', 'dewi.lestari@gmail.com', 'hash_dewi_004', 'user', '081911223344');
+INSERT INTO `users` VALUES
+(1,'admin','admin@admin','$2y$10$DVfNw8X1B2/ywRHlYKvy6.cAdytowAwKgDW4Jwcl5lCF.nrlKwcv6','admin','08123123123'), -- pw: 123
+(2,'Edward Newgate','edward@gmail.ac.id','$2y$10$uznAdoti84/cvNRKgBbVbOIAJCvo.3Ec6yWPN8tGdwpeAwz0pjtZ6','admin','081122334455'), -- pw: 123
+(3,'Kira Yamato','kira.yamato@gmail.com','$2y$10$txGfGV7ob3mgD5LFwaqwOelvO1wjEmFXAehI3yhV9JPX1Ey6/CGo.','user','085700011122'), -- pw: kira
+(4,'Banager Links','banager@gmail.com','$2y$10$i3p4skSGt.oh66L/KiCjuO63b0DDGjIShKzvohx5EdsxfDwR/vaCe','user','081299988877'), -- pw: banana
+(5,'Andi Wijaya','andi.wijaya@gmail.com','$2y$10$zaJLT5bpJPJRBCxeOTlPoeT4eGMHFSgayv33KxjloLiBGfnXQFr2a','user','081344455566'), -- pw: aandii
+(6,'Dewi Lestari','dewi.lestari@gmail.com','$2y$10$RD/rhyqlxkdQU82q/nWJouEhNjO9uoPSkOMOZ2oGfhciBFRyQzxaG','user','081911223344'); -- pw: dewii
 
 CREATE TABLE hotel (
     id_hotel INT AUTO_INCREMENT PRIMARY KEY,
@@ -113,8 +114,8 @@ CREATE TABLE reservasi (
     total_malam INT
 );
 
-INSERT INTO `reservasi` (`id_reservasi`, `id_user`, `id_kamar`, `id_pembayaran`, `id_pembatalan`, `tanggal_reservasi`, `tanggal_check_in`, `tanggal_check_out`, `jumlah_kamar`, `total_malam`) VALUES
-(1, 2, 1, 1, NULL, '2025-12-25', '2025-12-20', '2025-12-21', 1, 1),
-(2, 3, 1, 2, NULL, '2025-12-25', '2025-12-24', '2025-12-26', 1, 2),
-(3, 4, 3, 3, 1, '2025-12-25', '2025-11-10', '2025-11-11', 1, 1),
-(4, 5, 4, 4, NULL, '2025-12-25', '2025-12-30', '2026-01-01', 1, 2);
+-- INSERT INTO `reservasi` (`id_reservasi`, `id_user`, `id_kamar`, `id_pembayaran`, `id_pembatalan`, `tanggal_reservasi`, `tanggal_check_in`, `tanggal_check_out`, `jumlah_kamar`, `total_malam`) VALUES
+-- (1, 2, 1, 1, NULL, '2025-12-25', '2025-12-20', '2025-12-21', 1, 1),
+-- (2, 3, 1, 2, NULL, '2025-12-25', '2025-12-24', '2025-12-26', 1, 2),
+-- (3, 4, 3, 3, 1, '2025-12-25', '2025-11-10', '2025-11-11', 1, 1),
+-- (4, 5, 4, 4, NULL, '2025-12-25', '2025-12-30', '2026-01-01', 1, 2);
