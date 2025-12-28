@@ -2,7 +2,6 @@
 session_start();
 require 'koneksi.php';
 
-// Cek apakah user sudah login
 if (!isset($_SESSION['user']['id'])) {
     echo "<script>alert('Silakan login terlebih dahulu'); window.location.href='login.php';</script>";
     exit();
