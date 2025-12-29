@@ -601,14 +601,6 @@ $default_price = 1500000;
       </div>
 
       <!-- Navigasi -->
-      <nav>
-        <ul>
-          <li><a href="home.php">Beranda</a></li>
-          <li><a href="hotels.php">Hotel</a></li>
-          <li><a href="#deals">Penawaran</a></li>
-          <li><a href="#help">Bantuan</a></li>
-        </ul>
-      </nav>
 
       <!-- Tombol akun -->
       <button class="account-button" id="accountButton">
