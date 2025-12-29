@@ -734,6 +734,8 @@ footer {
                     <div class="logo-icon"><i class="fas fa-suitcase-rolling"></i></div>
                     <h1>Trip<span>Kuy</span></h1>
                 </div>
+                <nav>
+                </nav>
                 <button class="account-button" id="accountButton"><i class="fas fa-user"></i></button>
             </div>
         </div>
@@ -1146,4 +1148,5 @@ footer {
     </script>
 </body>
 </html>
+
 
