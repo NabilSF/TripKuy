@@ -734,14 +734,6 @@ footer {
                     <div class="logo-icon"><i class="fas fa-suitcase-rolling"></i></div>
                     <h1>Trip<span>Kuy</span></h1>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="home.php">Beranda</a></li>
-                        <li><a href="hotels.php">Hotel</a></li>
-                        <li><a href="#deals">Penawaran</a></li>
-                        <li><a href="#help">Bantuan</a></li>
-                    </ul>
-                </nav>
                 <button class="account-button" id="accountButton"><i class="fas fa-user"></i></button>
             </div>
         </div>
@@ -1154,3 +1146,4 @@ footer {
     </script>
 </body>
 </html>
+
