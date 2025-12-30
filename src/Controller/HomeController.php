@@ -19,7 +19,7 @@ final class HomeController extends AbstractController
         ]);
     }
 
-    #[Route("/hotel", name: "hotel_detail")]
+    #[Route("/hotel/{id}", name: "hotel_detail")]
     public function detail()
     {
         return new Response("Hello WOrld");

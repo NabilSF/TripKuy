@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@layer base {
+    :root {
+        /* Color Variables */
+        --color-primary: #2aa090;
+        --color-primary-dark: #13665b;
+        --color-text-dark: #222222;
+        --color-text-light: #717171;
+
+        /* Font Variables */
+        --font-sans: "Poppins", sans-serif;
+    }
+}
+
+/* Optional: Apply the font globally to the body */
+@layer base {
+    body {
+        font-family: var(--font-sans);
+        color: var(--color-text-dark);
+    }
+}
