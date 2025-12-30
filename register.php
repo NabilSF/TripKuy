@@ -32,60 +32,89 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TripKuy - Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media (max-width: 768px) {
+            .register-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .register-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hotel-image {
+                height: 300px;
+                object-fit: cover;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .register-form-container {
+                padding: 1rem;
+            }
+            
+            .form-title {
+                font-size: 2rem;
+            }
+            
+            .register-button {
+                padding: 0.875rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-white">
-    <div class="min-h-screen flex">
+    <div class="min-h-screen flex flex-col lg:flex-row">
         <!-- Left Side - Register Form -->
-        <div class="w-full lg:w-1/2 flex flex-col">
+        <div class="w-full lg:w-1/2 flex flex-col order-2 lg:order-1">
             <!-- Header -->
-            <header class="flex items-center justify-between px-8 py-6">
-                <div class="flex items-center gap-2">
-                    <div
-                        class="w-8 h-8 bg-black flex items-center justify-center rounded">
+            <header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-6 register-header">
+                <div class="flex items-center gap-2 mb-4 sm:mb-0">
+                    <div class="w-8 h-8 bg-black flex items-center justify-center rounded">
                         <div class="text-white text-xl font-bold">≡</div>
                     </div>
                     <span class="text-2xl font-bold">TripKuy</span>
                 </div>
-                <div class="flex items-center gap-3">
-                    <a
-                        href="./register.php"
-                        class="px-6 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition-colors">
+                <div class="flex items-center gap-3 register-actions">
+                    <a href="./register.php"
+                        class="px-4 sm:px-6 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition-colors whitespace-nowrap">
                         Register
                     </a>
-                    <a
-                        href="./login.php"
-                        class="px-6 py-2 border-2 border-black text-black text-sm rounded-md hover:bg-gray-50 transition-colors">
+                    <a href="./login.php"
+                        class="px-4 sm:px-6 py-2 border-2 border-black text-black text-sm rounded-md hover:bg-gray-50 transition-colors whitespace-nowrap">
                         Login
                     </a>
                 </div>
             </header>
 
             <!-- Register Form -->
-            <div class="flex-1 flex items-center justify-center px-8">
+            <div class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 lg:py-0 register-form-container">
                 <div class="w-full max-w-md">
-                    <h1 class="text-4xl font-bold mb-3">Sign up</h1>
-                    <p class="text-gray-600 mb-8">
+                    <h1 class="text-3xl sm:text-4xl font-bold mb-3 form-title">Sign up</h1>
+                    <p class="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
                         If you already have an account<br />
                         You can
-                        <a
-                            href="./login.php"
+                        <a href="./login.php"
                             class="text-blue-600 font-semibold hover:underline">Login here!</a>
                     </p>
 
-                    <form id="registerForm" method="post" class="space-y-6">
+                    <form id="registerForm" method="post" class="space-y-4 sm:space-y-6">
                         <!-- Nama Lengkap Input -->
                         <div>
                             <label class="block text-sm text-gray-600 mb-2">Nama Lengkap</label>
                             <div class="relative">
-                                <span
-                                    class="absolute left-0 top-3 text-gray-400 text-lg">👤</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">👤</span>
                                 <input
                                     type="text"
                                     name="fullname"
                                     id="fullname"
                                     placeholder="Enter your full name"
-                                    class="w-full pl-8 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    class="w-full pl-10 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent text-sm sm:text-base"
                                     required />
                             </div>
                         </div>
@@ -94,14 +123,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div>
                             <label class="block text-sm text-gray-600 mb-2">Email</label>
                             <div class="relative">
-                                <span
-                                    class="absolute left-0 top-3 text-gray-400 text-lg">✉</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">✉</span>
                                 <input
                                     type="email"
                                     id="email"
                                     name="email"
                                     placeholder="Enter your email address"
-                                    class="w-full pl-8 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    class="w-full pl-10 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent text-sm sm:text-base"
                                     required />
                             </div>
                         </div>
@@ -110,14 +138,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div>
                             <label class="block text-sm text-gray-600 mb-2">Nomor Telepon</label>
                             <div class="relative">
-                                <span
-                                    class="absolute left-0 top-3 text-gray-400 text-lg">📱</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">📱</span>
                                 <input
                                     type="tel"
                                     id="phone"
                                     name="phone"
                                     placeholder="Enter your phone number"
-                                    class="w-full pl-8 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    class="w-full pl-10 pr-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent text-sm sm:text-base"
                                     required
                                     pattern="[0-9]+" />
                             </div>
@@ -127,19 +154,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div>
                             <label class="block text-sm text-gray-600 mb-2">Password</label>
                             <div class="relative">
-                                <span
-                                    class="absolute left-0 top-3 text-gray-400 text-lg">🔒</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">🔒</span>
                                 <input
                                     type="password"
                                     id="password"
                                     name="password"
                                     placeholder="Enter your Password"
-                                    class="w-full pl-8 pr-12 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    class="w-full pl-10 pr-12 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent text-sm sm:text-base"
                                     required />
                                 <button
                                     type="button"
                                     id="togglePassword"
-                                    class="absolute right-0 top-3 text-gray-400 hover:text-gray-600">
+                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
                                     <svg
                                         id="eyeIcon"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -166,19 +192,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div>
                             <label class="block text-sm text-gray-600 mb-2">Confirm Password</label>
                             <div class="relative">
-                                <span
-                                    class="absolute left-0 top-3 text-gray-400 text-lg">🔒</span>
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">🔒</span>
                                 <input
                                     type="password"
                                     id="confirmPassword"
-                                    name="password"
+                                    name="confirm_password"
                                     placeholder="Confirm your Password"
-                                    class="w-full pl-8 pr-12 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent"
+                                    class="w-full pl-10 pr-12 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-colors bg-transparent text-sm sm:text-base"
                                     required />
                                 <button
                                     type="button"
                                     id="toggleConfirmPassword"
-                                    class="absolute right-0 top-3 text-gray-400 hover:text-gray-600">
+                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
                                     <svg
                                         id="eyeIconConfirm"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -204,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- Register Button -->
                         <button
                             type="submit"
-                            class="w-full py-4 bg-blue-600 text-white rounded-full font-semibold text-lg hover:bg-blue-700 transition-colors shadow-md">
+                            class="w-full py-3 sm:py-4 bg-blue-600 text-white rounded-full font-semibold text-base sm:text-lg hover:bg-blue-700 transition-colors shadow-md register-button">
                             Register
                         </button>
 
@@ -212,8 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="text-center pt-2">
                             <p class="text-sm text-gray-600">
                                 Already have an account?
-                                <a
-                                    href="./login.php"
+                                <a href="./login.php"
                                     class="text-blue-600 font-semibold hover:underline">Login here</a>
                             </p>
                         </div>
@@ -222,186 +246,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
 
-        <!-- Right Side - Illustration -->
-        <div
-            class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 via-blue-900 to-indigo-950 items-center justify-center p-12">
-            <div class="text-center">
-                <!-- Illustration -->
-                <div class="mb-12 relative">
-                    <svg
-                        viewBox="0 0 400 300"
-                        class="w-full max-w-lg mx-auto">
-                        <!-- Desk -->
-                        <rect
-                            x="50"
-                            y="180"
-                            width="300"
-                            height="15"
-                            fill="#4F46E5"
-                            rx="5" />
-
-                        <!-- Monitor -->
-                        <rect
-                            x="80"
-                            y="100"
-                            width="120"
-                            height="80"
-                            fill="#6B7280"
-                            rx="8" />
-                        <rect
-                            x="90"
-                            y="110"
-                            width="100"
-                            height="60"
-                            fill="#374151" />
-                        <rect
-                            x="130"
-                            y="180"
-                            width="20"
-                            height="15"
-                            fill="#6B7280" />
-                        <rect
-                            x="120"
-                            y="195"
-                            width="40"
-                            height="5"
-                            fill="#4F46E5"
-                            rx="2" />
-
-                        <!-- Person -->
-                        <circle cx="250" cy="130" r="25" fill="#FCA5A5" />
-                        <ellipse
-                            cx="245"
-                            cy="125"
-                            rx="3"
-                            ry="4"
-                            fill="#1F2937" />
-                        <ellipse
-                            cx="255"
-                            cy="125"
-                            rx="3"
-                            ry="4"
-                            fill="#1F2937" />
-                        <path
-                            d="M 245 135 Q 250 138 255 135"
-                            stroke="#1F2937"
-                            stroke-width="2"
-                            fill="none" />
-
-                        <!-- Hair -->
-                        <path
-                            d="M 230 120 Q 230 100 250 105 Q 270 100 270 120"
-                            fill="#8B5CF6" />
-                        <circle cx="245" cy="105" r="8" fill="#8B5CF6" />
-                        <circle cx="255" cy="105" r="8" fill="#8B5CF6" />
-
-                        <!-- Body -->
-                        <rect
-                            x="230"
-                            y="155"
-                            width="40"
-                            height="50"
-                            fill="#60A5FA"
-                            rx="8" />
-
-                        <!-- Arms -->
-                        <rect
-                            x="210"
-                            y="160"
-                            width="20"
-                            height="35"
-                            fill="#60A5FA"
-                            rx="8"
-                            transform="rotate(-20 220 170)" />
-                        <rect
-                            x="270"
-                            y="160"
-                            width="20"
-                            height="35"
-                            fill="#60A5FA"
-                            rx="8"
-                            transform="rotate(30 280 170)" />
-
-                        <!-- Hand waving -->
-                        <circle cx="295" cy="165" r="8" fill="#FCA5A5" />
-                        <path
-                            d="M 290 160 L 288 155 M 295 158 L 295 153 M 300 160 L 302 155"
-                            stroke="#FCA5A5"
-                            stroke-width="2"
-                            stroke-linecap="round" />
-
-                        <!-- Laptop -->
-                        <rect
-                            x="260"
-                            y="175"
-                            width="60"
-                            height="4"
-                            fill="#6B7280"
-                            rx="2" />
-                        <polygon
-                            points="260,179 320,179 315,200 265,200"
-                            fill="#374151" />
-                        <rect
-                            x="268"
-                            y="182"
-                            width="45"
-                            height="15"
-                            fill="#60A5FA" />
-
-                        <!-- Chair -->
-                        <rect
-                            x="235"
-                            y="205"
-                            width="30"
-                            height="8"
-                            fill="#4F46E5"
-                            rx="4" />
-                        <rect
-                            x="247"
-                            y="213"
-                            width="6"
-                            height="25"
-                            fill="#6B7280" />
-                        <circle cx="250" cy="245" r="12" fill="#4F46E5" />
-
-                        <!-- Plant -->
-                        <ellipse
-                            cx="100"
-                            cy="195"
-                            rx="10"
-                            ry="5"
-                            fill="#8B5CF6" />
-                        <path
-                            d="M 100 195 Q 95 185 98 175 Q 100 185 102 175 Q 105 185 100 195"
-                            fill="#10B981" />
-
-                        <!-- Coffee -->
-                        <rect
-                            x="310"
-                            y="175"
-                            width="20"
-                            height="25"
-                            fill="#EF4444"
-                            rx="3" />
-                        <ellipse
-                            cx="320"
-                            cy="173"
-                            rx="10"
-                            ry="3"
-                            fill="#DC2626" />
-                        <path
-                            d="M 330 183 Q 335 183 335 188 Q 335 193 330 193"
-                            stroke="#EF4444"
-                            stroke-width="2"
-                            fill="none" />
-                    </svg>
+        <!-- Right Side - Hotel Image -->
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center relative order-1 lg:order-2">
+            <!-- Hotel Image with Overlay -->
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+            
+            <!-- Hotel Image -->
+            <div class="relative w-full h-full">
+                <!-- Placeholder Hotel Image - You can replace this with actual hotel image -->
+                <div class="w-full h-full hotel-image" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center center / cover;">
+                    <!-- Content overlay -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 sm:p-8 lg:p-12 text-center text-white">
+                        <div class="mb-6 sm:mb-8 lg:mb-12">
+                            <div class="text-5xl sm:text-6xl mb-4"></div>
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
+                                Discover Amazing Hotels
+                            </h2>
+                            <p class="text-lg sm:text-xl text-blue-100">
+                                Join TripKuy and find the perfect stay for your next adventure
+                            </p>
+                        </div>
+                        
+                        <!-- Hotel Features -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 max-w-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="text-2xl mb-2"></div>
+                                <span class="text-sm sm:text-base">Luxury Stays</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="text-2xl mb-2"></div>
+                                <span class="text-sm sm:text-base">Best Prices</span>
+                            </div>
+                            <div class="flex flex-col items-center sm:col-span-1 col-span-2">
+                                <div class="text-2xl mb-2"></div>
+                                <span class="text-sm sm:text-base">Easy Booking</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Text -->
-                <h2 class="text-4xl font-bold text-white mb-4">
-                    Sign up to name
-                </h2>
-                <p class="text-blue-200 text-lg">Lorem Ipsum is simply</p>
             </div>
         </div>
     </div>
@@ -477,21 +359,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 password,
             });
 
-            // Di sini nanti bisa tambahkan logic untuk kirim data ke backend
-            // Setelah berhasil, bisa redirect ke login page
             const formData = new FormData(e.target);
-            const res = await fetch("./register.php", {
-                method: "POST",
-                body: formData,
-            });
+            try {
+                const res = await fetch("./register.php", {
+                    method: "POST",
+                    body: formData,
+                });
 
-            if (res.status == 200) {
-                window.location.href = "dashboard.php"
-            } else {
-                console.log(res.statusText)
+                if (res.status == 200) {
+                    const result = await res.json();
+                    if (result.success) {
+                        alert("Registrasi berhasil! Silakan login.");
+                        window.location.href = "login.php";
+                    } else {
+                        alert("Registrasi gagal: " + result.message);
+                    }
+                } else {
+                    const errorText = await res.text();
+                    console.error("Register failed:", errorText);
+                    alert("Registrasi gagal. Silakan coba lagi.");
+                }
+            } catch (error) {
+                console.error("Error during registration:", error);
+                alert("Terjadi kesalahan. Silakan coba lagi.");
             }
         });
     </script>
 </body>
-
 </html>
