@@ -80,68 +80,77 @@
 <div class="max-w-[1400px] mx-auto px-10 pb-20">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
-        <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100">
-            <div class="relative h-56 overflow-hidden">
-                <img src="https://plus.unsplash.com/premium_photo-1675748924381-8051877f09c0?auto=format&fit=crop&w=800&q=80" alt="Hotel Indonesia" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <button class="wishlist-btn absolute top-4 right-4 bg-white/90 p-2 rounded-full w-9 h-9 flex items-center justify-center hover:scale-110 transition-all">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-semibold flex items-center gap-1">
-                    <i class="fas fa-star text-yellow-400"></i> 5.0
-                </div>
-            </div>
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-sm font-bold leading-tight flex-1">Hotel Indonesia Kempinski</h3>
-                    <div class="text-primary font-bold text-lg">Rp3.5jt<span class="text-xs text-text-light font-normal">/malam</span></div>
-                </div>
-                <div class="flex items-center gap-2 text-text-light text-xs font-medium mb-3">
-                    <i class="fas fa-map-marker-alt text-primary"></i> Jakarta Pusat
-                </div>
-                <p class="text-xs text-text-dark line-clamp-2 mb-4">Hotel bintang 5 bersejarah pertama di Indonesia dengan fasilitas mewah di pusat ibu kota.</p>
+        {% for hotel in hotels %}
+            {% set kamar = hotel.tipeKamars|first %}
 
-                <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-100 mb-4 text-[11px] text-text-light font-medium">
-                    <span class="flex items-center gap-1"><i class="fas fa-wifi text-primary"></i> WiFi</span>
-                    <span class="flex items-center gap-1"><i class="fas fa-swimming-pool text-primary"></i> Pool</span>
-                    <span class="flex items-center gap-1"><i class="fas fa-utensils text-primary"></i> Resto</span>
+            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100">
+                <div class="relative h-56 overflow-hidden">
+                    <img
+                        src="{{ hotel.gambar ?? 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80' }}"
+                        alt="{{ hotel.namaHotel }}"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    >
+
+                    <button class="wishlist-btn absolute top-4 right-4 bg-white/90 p-2 rounded-full w-9 h-9 flex items-center justify-center hover:scale-110 transition-all">
+                        <i class="far fa-heart"></i>
+                    </button>
+
+                    <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-semibold flex items-center gap-1">
+                        <i class="fas fa-star text-yellow-400"></i> 4.5
+                    </div>
                 </div>
 
-                <a href="#" class="inline-block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold text-sm transition-colors">
-                    Lihat Detail
-                </a>
-            </div>
-        </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold leading-tight flex-1">
+                            {{ hotel.namaHotel }}
+                        </h3>
 
-        <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100">
-            <div class="relative h-56 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Gaia Hotel" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <button class="wishlist-btn absolute top-4 right-4 bg-white/90 p-2 rounded-full w-9 h-9 flex items-center justify-center hover:scale-110 transition-all">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-semibold flex items-center gap-1">
-                    <i class="fas fa-star text-yellow-400"></i> 4.3
+                        {% if kamar %}
+                            <div class="text-primary font-bold text-lg">
+                                Rp{{ kamar.harga|number_format(0, ',', '.') }}
+                                <span class="text-xs text-text-light font-normal">/malam</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex items-center gap-2 text-text-light text-xs font-medium mb-3">
+                        <i class="fas fa-map-marker-alt text-primary"></i>
+                        {{ hotel.alamat }}
+                    </div>
+
+                    <p class="text-xs text-text-dark line-clamp-2 mb-4">
+                        {{ hotel.deskripsi }}
+                    </p>
+
+                    {% if kamar %}
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-100 mb-4 text-[11px] text-text-light font-medium">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-bed text-primary"></i>
+                                {{ kamar.namaKamar }}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-user text-primary"></i>
+                                {{ kamar.kapasitasOrang }} orang
+                            </span>
+                        </div>
+                    {% endif %}
+
+                    <a href="{{ path('hotel_detail', {id: hotel.id}) }}"
+                       class="inline-block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold text-sm transition-colors">
+                        Lihat Detail
+                    </a>
                 </div>
             </div>
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-sm font-bold leading-tight flex-1">The Gaia Hotel Bandung</h3>
-                    <div class="text-primary font-bold text-lg">Rp2.2jt<span class="text-xs text-text-light font-normal">/malam</span></div>
-                </div>
-                <div class="flex items-center gap-2 text-text-light text-xs font-medium mb-3">
-                    <i class="fas fa-map-marker-alt text-primary"></i> Bandung
-                </div>
-                <p class="text-xs text-text-dark line-clamp-2 mb-4">Resor kontemporer dengan konsep Active/Rest dan pemandangan pegunungan.</p>
-                <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-100 mb-4 text-[11px] text-text-light font-medium">
-                    <span class="flex items-center gap-1"><i class="fas fa-wifi text-primary"></i> WiFi</span>
-                    <span class="flex items-center gap-1"><i class="fas fa-mountain text-primary"></i> View</span>
-                </div>
-                <a href="#" class="inline-block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold text-sm transition-colors">
-                    Lihat Detail
-                </a>
+
+        {% else %}
+            <div class="col-span-full text-center text-gray-500">
+                Data hotel tidak tersedia
             </div>
-        </div>
+        {% endfor %}
 
     </div>
+
 </div>
 
 <footer class="bg-gray-100 py-16 px-10 border-t border-gray-200">
