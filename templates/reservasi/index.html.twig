@@ -1,491 +1,149 @@
 {% extends 'base.html.twig' %}
-{% block title %}Home{% endblock %}
+
+{% block title %}Reservasi - {{ hotel.namaHotel }}{% endblock %}
 
 {% block body %}
 {% include 'header.html.twig' %}
-<div class="bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <div class="flex flex-col lg:flex-row gap-8">
-                <div class="flex-1">
-                    <form class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
-                        <input type="hidden" name="hotel_id" value="1" />
 
-                        <div
-                            class="text-center mb-8 pb-6 border-b border-gray-100">
-                            <div class="text-4xl text-[var(--color-primary)] mb-4">
-                                <i class="fas fa-calendar-check"></i>
-                            </div>
-                            <h2 class="text-3xl font-bold text-gray-900 mb-2">
-                                Formulir Reservasi
-                            </h2>
-                            <p class="text-gray-500 font-medium">
-                                Lengkapi data diri Anda untuk melanjutkan
-                                pemesanan
-                            </p>
-                        </div>
+<div class="bg-slate-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-                        <div class="mb-8">
-                            <h3
-                                class="text-xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-gray-100">
-                                Data Pemesan
-                            </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="col-span-1 md:col-span-2">
-                                    <label
-                                        class="block text-sm font-semibold text-gray-600 mb-2"
-                                        >Nama Lengkap
-                                        <span class="text-red-500"
-                                            >*</span
-                                        ></label
-                                    >
-                                    <input
-                                        type="text"
-                                        name="nama"
-                                        class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white placeholder-gray-400"
-                                        placeholder="Masukkan nama lengkap"
-                                        required />
-                                </div>
-
-                                <div>
-                                    <label
-                                        class="block text-sm font-semibold text-gray-600 mb-2"
-                                        >Email
-                                        <span class="text-red-500"
-                                            >*</span
-                                        ></label
-                                    >
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white placeholder-gray-400"
-                                        placeholder="nama@email.com"
-                                        required />
-                                </div>
-
-                                <div>
-                                    <label
-                                        class="block text-sm font-semibold text-gray-600 mb-2"
-                                        >Nomor Telepon
-                                        <span class="text-red-500"
-                                            >*</span
-                                        ></label
-                                    >
-                                    <input
-                                        type="tel"
-                                        name="telepon"
-                                        class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white placeholder-gray-400"
-                                        placeholder="081234567890"
-                                        required />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-8">
-                            <h3
-                                class="text-xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-gray-100">
-                                Detail Reservasi
-                            </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div
-                                    class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label
-                                            class="block text-sm font-semibold text-gray-600 mb-2"
-                                            >Tanggal Check-in
-                                            <span class="text-red-500"
-                                                >*</span
-                                            ></label
-                                        >
-                                        <input
-                                            type="date"
-                                            name="tanggal_checkin"
-                                            class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white text-gray-700"
-                                            required />
-                                    </div>
-                                    <div>
-                                        <label
-                                            class="block text-sm font-semibold text-gray-600 mb-2"
-                                            >Tanggal Check-out
-                                            <span class="text-red-500"
-                                                >*</span
-                                            ></label
-                                        >
-                                        <input
-                                            type="date"
-                                            name="tanggal_checkout"
-                                            class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white text-gray-700"
-                                            required />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label
-                                        class="block text-sm font-semibold text-gray-600 mb-2"
-                                        >Jumlah Kamar
-                                        <span class="text-red-500"
-                                            >*</span
-                                        ></label
-                                    >
-                                    <div class="relative">
-                                        <select
-                                            name="jumlah_kamar"
-                                            class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg appearance-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white text-gray-700"
-                                            required>
-                                            <option value="">
-                                                Pilih jumlah
-                                            </option>
-                                            <option value="1">1 Kamar</option>
-                                            <option value="2">2 Kamar</option>
-                                            <option value="3">3 Kamar</option>
-                                            <option value="4">4 Kamar</option>
-                                        </select>
-                                        <div
-                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                                            <i
-                                                class="fas fa-chevron-down text-xs"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label
-                                        class="block text-sm font-semibold text-gray-600 mb-2"
-                                        >Jumlah Tamu
-                                        <span class="text-red-500"
-                                            >*</span
-                                        ></label
-                                    >
-                                    <div class="relative">
-                                        <select
-                                            name="jumlah_tamu"
-                                            class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg appearance-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white text-gray-700"
-                                            required>
-                                            <option value="">
-                                                Pilih jumlah
-                                            </option>
-                                            <option value="1">1 Tamu</option>
-                                            <option value="2">2 Tamu</option>
-                                            <option value="3">3 Tamu</option>
-                                            <option value="4">4 Tamu</option>
-                                        </select>
-                                        <div
-                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                                            <i
-                                                class="fas fa-chevron-down text-xs"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-span-1 md:col-span-2">
-                                    <label
-                                        class="block text-sm font-semibold text-gray-600 mb-2"
-                                        >Tipe Kamar
-                                        <span class="text-red-500"
-                                            >*</span
-                                        ></label
-                                    >
-                                    <div class="relative">
-                                        <select
-                                            name="tipe_kamar"
-                                            class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg appearance-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white text-gray-700"
-                                            required>
-                                            <option value="">
-                                                Pilih tipe kamar
-                                            </option>
-                                            <option value="Standard Room">
-                                                Standard Room - Rp 500.000/malam
-                                            </option>
-                                            <option value="Deluxe Room">
-                                                Deluxe Room - Rp 850.000/malam
-                                            </option>
-                                            <option value="Executive Suite">
-                                                Executive Suite - Rp
-                                                1.500.000/malam
-                                            </option>
-                                        </select>
-                                        <div
-                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                                            <i
-                                                class="fas fa-chevron-down text-xs"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-span-1 md:col-span-2">
-                                    <label
-                                        class="block text-sm font-semibold text-gray-600 mb-2"
-                                        >Catatan Khusus (Opsional)</label
-                                    >
-                                    <textarea
-                                        name="catatan_khusus"
-                                        class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white min-h-[120px] resize-y placeholder-gray-400"
-                                        placeholder="Contoh: Minta kamar lantai atas, dekat lift, atau permintaan khusus lainnya..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-8">
-                            <h3
-                                class="text-xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-gray-100">
-                                Syarat & Ketentuan
-                            </h3>
-
-                            <div
-                                class="bg-slate-50 p-5 rounded-lg border border-gray-200 mb-5">
-                                <p class="mb-2 font-medium text-gray-700">
-                                    Dengan melanjutkan pemesanan, Anda
-                                    menyetujui:
-                                </p>
-                                <ul
-                                    class="list-disc pl-5 text-gray-600 space-y-1 text-sm">
-                                    <li>
-                                        Pembayaran harus dilakukan dalam 2 jam
-                                        setelah pemesanan
-                                    </li>
-                                    <li>
-                                        Pembatalan dapat dilakukan maksimal 24
-                                        jam sebelum check-in
-                                    </li>
-                                    <li>
-                                        Check-in: 14:00 WIB, Check-out: 12:00
-                                        WIB
-                                    </li>
-                                    <li>
-                                        Data yang diisi adalah benar dan dapat
-                                        dipertanggungjawabkan
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <label
-                                class="flex items-start gap-3 cursor-pointer group">
-                                <input
-                                    type="checkbox"
-                                    name="agreeTerms"
-                                    class="mt-1 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary"
-                                    required />
-                                <span
-                                    class="text-gray-600 text-sm group-hover:text-primary transition-colors"
-                                    >Saya telah membaca dan menyetujui syarat &
-                                    ketentuan yang berlaku</span
-                                >
-                            </label>
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="w-full bg-gradient-to-r from-primary to-accent text-white font-bold py-4 px-6 rounded-xl text-lg hover:shadow-lg hover:shadow-primary/30 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
-                            <i class="fas fa-lock"></i> Lanjutkan ke Pembayaran
-                        </button>
-
-                        <button
-                            type="button"
-                            onclick="window.history.back()"
-                            class="mt-4 w-full md:w-auto inline-flex items-center justify-center gap-2 text-gray-600 bg-gray-100 hover:bg-gray-200 font-semibold py-3 px-6 rounded-lg transition-colors duration-300">
-                            <i class="fas fa-arrow-left"></i> Kembali
-                        </button>
-                    </form>
+        {# Flash Messages #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="mb-6 bg-{{ label == 'success' ? 'green' : 'red' }}-100 border border-{{ label == 'success' ? 'green' : 'red' }}-200 text-{{ label == 'success' ? 'green' : 'red' }}-800 px-4 py-3 rounded-lg flex items-center gap-3">
+                    <i class="fas fa-{{ label == 'success' ? 'check-circle' : 'exclamation-circle' }}"></i>
+                    <span>{{ message }}</span>
                 </div>
+            {% endfor %}
+        {% endfor %}
 
-                <div class="lg:w-1/3">
-                    <div
-                        class="bg-white rounded-2xl shadow-xl p-6 sticky top-24">
-                        <div class="border-b border-gray-100 pb-5 mb-5">
-                            <h4 class="text-xl font-bold text-gray-900 mb-1">
-                                Hotel TripKuy City Center
-                            </h4>
-                            <p class="text-sm text-gray-500 mb-3">
-                                Jl. Jendral Sudirman No. 88, Jakarta Pusat
-                            </p>
+        <div class="flex flex-col lg:flex-row gap-8">
+            <div class="flex-1">
+                <form id="reservationForm" method="POST" class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
+                    <div class="text-center mb-8 pb-6 border-b border-gray-100">
+                        <div class="text-4xl text-primary mb-4">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Formulir Reservasi</h2>
+                        <p class="text-gray-500 font-medium">{{ hotel.namaHotel }}</p>
+                    </div>
 
-                            <div
-                                class="flex items-center gap-3 bg-gray-50 px-3 py-2 rounded-full border border-gray-100 w-fit">
-                                <div
-                                    class="flex text-yellow-400 text-xs gap-0.5">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <div class="text-xs">
-                                    <span class="font-bold text-gray-800"
-                                        >4.5</span
-                                    >
-                                    <span class="text-gray-500"
-                                        >(584 Peringkat)</span
-                                    >
-                                </div>
+                    <div class="space-y-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-2">Check-in</label>
+                                <input type="date" id="checkin" name="checkin" value="{{ checkin }}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 outline-none" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-2">Check-out</label>
+                                <input type="date" id="checkout" name="checkout" value="{{ checkout }}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 outline-none" readonly>
                             </div>
                         </div>
 
-                        <div
-                            class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                            <div class="space-y-3 text-sm">
-                                <div
-                                    class="flex justify-between pb-3 border-b border-dashed border-gray-300">
-                                    <span class="text-gray-600"
-                                        >Harga per Kamar</span
-                                    >
-                                    <span class="font-medium text-gray-900"
-                                        >Rp 850.000</span
-                                    >
-                                </div>
-                                <div
-                                    class="flex justify-between pb-3 border-b border-dashed border-gray-300">
-                                    <span class="text-gray-600">2 Malam</span>
-                                    <span class="font-medium text-gray-900"
-                                        >Rp 1.700.000</span
-                                    >
-                                </div>
-                                <div
-                                    class="flex justify-between pb-3 border-b border-dashed border-gray-300 text-green-600">
-                                    <span>Diskon Kupon 67%</span>
-                                    <span class="font-medium"
-                                        >-Rp 1.139.000</span
-                                    >
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-600 mb-2">Tipe Kamar</label>
+                                <select id="tipe_kamar" name="tipe_kamar" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary outline-none" required>
+                                    {% for kamar in kamarList %}
+                                        <option value="{{ kamar.id }}"
+                                                data-harga="{{ kamar.harga }}"
+                                                data-nama="{{ kamar.namaKamar }}"
+                                                {{ kamar.id == selectedRoom.id ? 'selected' : '' }}>
+                                            {{ kamar.namaKamar }} - Rp {{ kamar.harga|number_format(0, ',', '.') }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                             </div>
-
-                            <div
-                                class="flex justify-between items-center mt-4 pt-2 border-t-2 border-gray-200">
-                                <span class="font-bold text-gray-800 text-lg"
-                                    >Total Perkiraan</span
-                                >
-                                <span class="font-bold text-primary text-lg"
-                                    >Rp 561.000</span
-                                >
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-2">Jumlah Kamar</label>
+                                <input type="number" id="jumlah_kamar" name="jumlah_kamar" value="1" min="1" max="10" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary outline-none">
                             </div>
                         </div>
+                    </div>
 
-                        <div
-                            class="mt-5 bg-amber-50 rounded-lg p-4 text-center border border-amber-100">
-                            <div
-                                class="text-amber-800 font-semibold flex items-center justify-center gap-2 mb-1">
-                                <i class="fas fa-piggy-bank"></i> Penghematan
-                                Anda
-                            </div>
-                            <div class="text-xl font-bold text-amber-700">
-                                Rp 1.139.000
-                            </div>
+                    <button type="submit" class="w-full mt-10 bg-primary hover:bg-teal-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3">
+                        <i class="fas fa-lock"></i> Konfirmasi Pemesanan
+                    </button>
+                </form>
+            </div>
+
+            <div class="lg:w-1/3">
+                <div class="bg-white rounded-2xl shadow-xl p-6 sticky top-24 border border-gray-100">
+                    <h4 class="text-xl font-bold text-gray-900 mb-4">Ringkasan Biaya</h4>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Durasi</span>
+                            <span class="font-semibold text-gray-800"><span id="display-nights">{{ nights }}</span> Malam</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Kamar</span>
+                            <span id="display-room-name" class="font-semibold text-gray-800">{{ selectedRoom.namaKamar }}</span>
                         </div>
 
-                        <div
-                            class="mt-5 bg-gray-100 rounded-lg p-3 flex items-center gap-2 text-xs text-gray-500">
-                            <i class="fas fa-info-circle"></i>
-                            <span
-                                >Harga sudah termasuk pajak dan biaya
-                                layanan</span
-                            >
+                        <div class="border-t border-dashed pt-4 mt-4">
+                            <div class="flex justify-between items-center text-sm mb-2">
+                                <span class="text-gray-600">Harga per Kamar</span>
+                                <span id="display-price-per-room" class="text-gray-900">Rp {{ selectedRoom.harga|number_format(0, ',', '.') }}</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t-2 border-gray-100">
+                                <span class="font-bold text-gray-800 text-lg">Total Bayar</span>
+                                <span id="display-total" class="font-bold text-primary text-2xl">
+                                    Rp {{ (selectedRoom.harga * nights)|number_format(0, ',', '.') }}
+                                </span>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="mt-6 bg-blue-50 p-4 rounded-lg flex gap-3 items-start">
+                        <i class="fas fa-info-circle text-blue-500 mt-1"></i>
+                        <p class="text-[11px] text-blue-700 leading-relaxed">
+                            Kalkulasi di atas sudah termasuk pajak hotel dan biaya layanan 10%.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <footer class="bg-gray-900 text-white mt-16 pt-16 pb-8">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-                    <div>
-                        <h3 class="text-xl font-bold mb-6">TripKuy</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Platform reservasi penginapan terpercaya di
-                            Indonesia. Memberikan pengalaman menginap terbaik
-                            dengan harga terjangkau.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 class="text-xl font-bold mb-6">Tautan Cepat</h3>
-                        <ul class="space-y-3 text-sm text-gray-400">
-                            <li>
-                                <a
-                                    href="home.php"
-                                    class="hover:text-primary transition-colors"
-                                    >Beranda</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="hotels.php"
-                                    class="hover:text-primary transition-colors"
-                                    >Hotel</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#deals"
-                                    class="hover:text-primary transition-colors"
-                                    >Penawaran</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#help"
-                                    class="hover:text-primary transition-colors"
-                                    >Bantuan</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="text-xl font-bold mb-6">Kontak Kami</h3>
-                        <ul class="space-y-3 text-sm text-gray-400">
-                            <li>
-                                <a
-                                    href="#"
-                                    class="hover:text-primary transition-colors"
-                                    >+62 21 1234 5678</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    class="hover:text-primary transition-colors"
-                                    >info@tripkuy.id</a
-                                >
-                            </li>
-                            <li class="hover:text-primary cursor-default">
-                                Jl. Sudirman No. 123, Jakarta
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="text-xl font-bold mb-6">Kebijakan</h3>
-                        <ul class="space-y-3 text-sm text-gray-400">
-                            <li>
-                                <a
-                                    href="#"
-                                    class="hover:text-primary transition-colors"
-                                    >Kebijakan Privasi</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    class="hover:text-primary transition-colors"
-                                    >Syarat & Ketentuan</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    class="hover:text-primary transition-colors"
-                                    >Kebijakan Pembatalan</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div
-                    class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
-                    <p>&copy; 2025 TripKuy. Semua hak dilindungi.</p>
-                </div>
-            </div>
-        </footer>
+    </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const roomSelect = document.getElementById('tipe_kamar');
+    const qtyInput = document.getElementById('jumlah_kamar');
+    const nights = parseInt("{{ nights }}");
+
+    const displayRoomName = document.getElementById('display-room-name');
+    const displayPricePerRoom = document.getElementById('display-price-per-room');
+    const displayTotal = document.getElementById('display-total');
+
+    function formatRupiah(number) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(number);
+    }
+
+    function updateSummary() {
+        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+        const price = parseInt(selectedOption.getAttribute('data-harga'));
+        const name = selectedOption.getAttribute('data-nama');
+        const qty = parseInt(qtyInput.value) || 1;
+
+        const total = price * nights * qty;
+
+        displayRoomName.innerText = name;
+        displayPricePerRoom.innerText = formatRupiah(price);
+        displayTotal.innerText = formatRupiah(total);
+    }
+
+    // Jalankan update saat ada perubahan input
+    roomSelect.addEventListener('change', updateSummary);
+    qtyInput.addEventListener('input', updateSummary);
+});
+</script>
+
+{% include 'footer.html.twig' %}
 {% endblock %}

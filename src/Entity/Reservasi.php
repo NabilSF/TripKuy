@@ -29,11 +29,11 @@ class Reservasi
     #[ORM\Column]
     private ?int $totalMalam = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reservasis')]
+    #[ORM\ManyToOne(inversedBy: "reservasis")]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reservasis')]
+    #[ORM\ManyToOne(inversedBy: "reservasis")]
     #[ORM\JoinColumn(nullable: false)]
     private ?TipeKamar $kamar = null;
 
