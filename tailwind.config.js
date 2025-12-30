@@ -6,7 +6,17 @@ module.exports = {
         // ... other paths
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: "#2aa090",
+                "primary-dark": "#13665b",
+                "text-dark": "#222",
+                "text-light": "#717171",
+            },
+            fontFamily: {
+                sans: ["Poppins", "sans-serif"],
+            },
+        },
     },
     plugins: [],
 };

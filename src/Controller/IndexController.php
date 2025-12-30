@@ -12,7 +12,7 @@ final class IndexController extends AbstractController
     public function index(): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute("app_dashboard");
+            return $this->redirectToRoute("app_home");
         } else {
             return $this->redirectToRoute("app_login");
         }

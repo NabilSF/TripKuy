@@ -1,193 +1,233 @@
 {% extends 'base.html.twig' %}
+{% block title %}Home{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
 
-{% block title %}Hello HomeController!{% endblock %}
+    <style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-verflow-style: none; scrollbar-width: none; }
+    </style>
+
+
+{% endblock %}
 
 {% block body %}
-
-<!DOCTYPE html>
-<header class="sticky top-0 z-[100] bg-white shadow-md">
-    <div class="max-w-[1400px] mx-auto px-5 sm:px-10">
-        <div class="flex flex-col md:flex-row justify-between items-center py-4 gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white text-xl">
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-[1400px] mx-auto px-5 md:px-10 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <a href="/home" class="flex items-center gap-3">
+            <div class="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white text-xl">
+                <div class="logo-icon bg-[#2aa090] w-[40px] h-[40px] rounded-full flex items-center justify-center">
                     <i class="fas fa-suitcase-rolling"></i>
                 </div>
-                <h1 class="text-2xl font-bold">Trip<span class="text-primary">Kuy</span></h1>
             </div>
+            <h1 href="/home" class="text-2xl font-bold">Trip<span class="text-primary text-[#2aa090]">Kuy</span></h1>
+        </a>
 
-            <button class="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-lg text-textLight hover:bg-textDark hover:text-white hover:border-textDark transition-all duration-300">
-                <i class="fas fa-user"></i>
-            </button>
-        </div>
+        <button id="accountButton" class="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-text-dark hover:text-white hover:border-text-dark transition-all duration-300">
+            <i class="fas fa-user"></i>
+        </button>
     </div>
 </header>
 
-<section class="relative bg-gradient-to-br from-[#1d856e] to-[#2a75a0] text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920')] bg-center bg-cover"></div>
+<section class="relative bg-gradient-to-br from-[#1d856e] to-[#2a75a0] py-20 px-10 overflow-hidden text-center text-white">
+    <div class="absolute inset-0 opacity-20 pointer-events-none">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920" class="w-full h-full object-cover" alt="">
+    </div>
 
-    <div class="relative z-10 max-w-[800px] mx-auto text-center py-20 px-5">
-        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">Dunia Adalah Tempatmu Berpijak</h1>
-        <p class="text-lg md:text-xl text-gray-200 font-light mb-8">Pengalaman menginap tak terlupakan dengan fasilitas premium</p>
-
-        <div class="flex flex-col sm:flex-row justify-center gap-5 mt-8">
-            <div class="text-sm font-medium flex items-center justify-center gap-2">
-                <i class="fas fa-shield-alt"></i> Keamanan Terjamin
-            </div>
-            <div class="text-sm font-medium flex items-center justify-center gap-2">
-                <i class="fas fa-star"></i> Rating 4.8+
-            </div>
-            <div class="text-sm font-medium flex items-center justify-center gap-2">
-                <i class="fas fa-headset"></i> Dukungan 24/7
-            </div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4">Dunia Adalah Tempatmu Berpijak</h1>
+        <p class="text-lg md:text-xl text-gray-200 mb-8 font-light">
+            Pengalaman menginap tak terlupakan dengan fasilitas premium
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-5">
+            <div class="text-sm font-medium"><i class="fas fa-shield-alt mr-2"></i> Keamanan Terjamin</div>
+            <div class="text-sm font-medium"><i class="fas fa-star mr-2 text-yellow-400"></i> Rating 4.8+</div>
+            <div class="text-sm font-medium"><i class="fas fa-headset mr-2"></i> Dukungan 24/7</div>
         </div>
     </div>
 </section>
 
-<section class="relative -mt-10 mb-10 px-5">
-    <div class="max-w-[900px] mx-auto">
-        <form class="bg-white rounded-[40px] shadow-xl p-2 flex flex-col md:flex-row items-center gap-1 border border-gray-100">
-            <div class="flex-1 w-full px-5 py-2 hover:bg-lightGray rounded-[40px] transition-all cursor-pointer">
-                <label class="block text-[11px] uppercase tracking-wider text-textLight font-semibold mb-1">Lokasi</label>
-                <input type="text" placeholder="Ke mana?" class="bg-transparent border-none outline-none text-sm w-full font-medium">
+<section class="relative -mt-10 px-5 md:px-10 mb-10">
+    <div class="max-w-4xl mx-auto bg-white rounded-3xl md:rounded-full shadow-xl p-3 border border-gray-100">
+        <form class="flex flex-col md:flex-row items-center gap-2">
+            <div class="flex-1 w-full px-5 py-2 hover:bg-gray-50 rounded-full transition-colors">
+                <label class="block text-[10px] uppercase tracking-wider text-text-light font-bold">Lokasi</label>
+                <input type="text" placeholder="Ke mana?" class="w-full bg-transparent outline-none text-sm font-semibold placeholder:font-normal">
             </div>
-            <div class="flex-1 w-full px-5 py-2 hover:bg-lightGray rounded-[40px] transition-all cursor-pointer border-l-0 md:border-l border-gray-100">
-                <label class="block text-[11px] uppercase tracking-wider text-textLight font-semibold mb-1">Check-in</label>
-                <input type="date" class="bg-transparent border-none outline-none text-sm w-full font-medium">
+            <div class="hidden md:block w-px h-8 bg-gray-200"></div>
+            <div class="flex-1 w-full px-5 py-2 hover:bg-gray-50 rounded-full transition-colors">
+                <label class="block text-[10px] uppercase tracking-wider text-text-light font-bold">Check-in</label>
+                <input type="date" class="w-full bg-transparent outline-none text-sm font-semibold">
             </div>
-            <div class="flex-1 w-full px-5 py-2 hover:bg-lightGray rounded-[40px] transition-all cursor-pointer border-l-0 md:border-l border-gray-100">
-                <label class="block text-[11px] uppercase tracking-wider text-textLight font-semibold mb-1">Check-out</label>
-                <input type="date" class="bg-transparent border-none outline-none text-sm w-full font-medium">
+            <div class="flex-1 w-full px-5 py-2 hover:bg-gray-50 rounded-full transition-colors">
+                <label class="block text-[10px] uppercase tracking-wider text-text-light font-bold">Check-out</label>
+                <input type="date" class="w-full bg-transparent outline-none text-sm font-semibold">
             </div>
-            <div class="flex-1 w-full px-5 py-2 hover:bg-lightGray rounded-[40px] transition-all cursor-pointer border-l-0 md:border-l border-gray-100">
-                <label class="block text-[11px] uppercase tracking-wider text-textLight font-semibold mb-1">Tamu</label>
-                <input type="number" value="1" class="bg-transparent border-none outline-none text-sm w-full font-medium">
+            <div class="flex-1 w-full px-5 py-2 hover:bg-gray-50 rounded-full transition-colors">
+                <label class="block text-[10px] uppercase tracking-wider text-text-light font-bold">Tamu</label>
+                <input type="number" value="1" class="w-full bg-transparent outline-none text-sm font-semibold">
             </div>
-            <button class="bg-primary text-white px-8 py-4 rounded-full flex items-center gap-3 font-semibold hover:bg-primaryDark transition-all w-full md:w-auto justify-center">
-                <span class="bg-white text-primary w-7 h-7 rounded-full flex items-center justify-center text-xs">
-                    <i class="fas fa-search"></i>
-                </span>
-                Cari
+            <button class="bg-primary hover:bg-primary-dark w-full md:w-auto text-white px-8 py-4 rounded-full flex items-center justify-center gap-3 font-semibold transition-all">
+                <i class="fas fa-search bg-white text-primary rounded-full p-2 text-xs"></i> Cari
             </button>
         </form>
     </div>
 </section>
 
-<div class="max-w-[1400px] mx-auto px-5 sm:px-10 mb-8">
-    <div class="flex gap-4 border-b border-gray-200 pb-4 overflow-x-auto">
-        <div class="flex items-center gap-2 px-6 py-3 rounded-full bg-textDark text-white font-semibold text-sm whitespace-nowrap cursor-pointer">
+<div class="max-w-[1400px] mx-auto px-10 mb-8">
+    <div class="flex gap-4 border-b border-gray-200 pb-4 overflow-x-auto hide-scrollbar">
+        <button class="filter-tab active flex items-center gap-2 px-6 py-3 rounded-full bg-text-dark text-white text-sm font-semibold border border-text-dark transition-all whitespace-nowrap">
             <i class="fas fa-hotel"></i> Semua
-        </div>
-        <div class="flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 hover:bg-lightGray transition-all font-medium text-sm whitespace-nowrap cursor-pointer text-textLight">
+        </button>
+        <button class="filter-tab flex items-center gap-2 px-6 py-3 rounded-full bg-white text-text-dark text-sm font-medium border border-gray-300 hover:bg-gray-50 transition-all whitespace-nowrap">
             <i class="fas fa-crown"></i> Luxury
-        </div>
-        <div class="flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 hover:bg-lightGray transition-all font-medium text-sm whitespace-nowrap cursor-pointer text-textLight">
+        </button>
+        <button class="filter-tab flex items-center gap-2 px-6 py-3 rounded-full bg-white text-text-dark text-sm font-medium border border-gray-300 hover:bg-gray-50 transition-all whitespace-nowrap">
             <i class="fas fa-umbrella-beach"></i> Resort
-        </div>
-        <div class="flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 hover:bg-lightGray transition-all font-medium text-sm whitespace-nowrap cursor-pointer text-textLight">
+        </button>
+        <button class="filter-tab flex items-center gap-2 px-6 py-3 rounded-full bg-white text-text-dark text-sm font-medium border border-gray-300 hover:bg-gray-50 transition-all whitespace-nowrap">
             <i class="fas fa-home"></i> Villa
-        </div>
+        </button>
     </div>
 </div>
 
-<main class="max-w-[1400px] mx-auto px-5 sm:px-10 pb-16">
+<div class="max-w-[1400px] mx-auto px-10 pb-20">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        <?php
-        while ($h = mysqli_fetch_assoc($data)):
-            $price = $h['harga_kamar'] ? number_format($h['harga_kamar'], 0, ',', '.') : '1.500.000';
-            $rating = rand(40, 50) / 10;
-            $kamar_nama = $h['nama_kamar'] ?: 'Deluxe Room';
-            $kapasitas = $h['kapasitas_orang'] ?: 2;
-        ?>
-        <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 cursor-pointer">
-            <div class="h-[220px] relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=400&h=300"
-                     alt="<?= htmlspecialchars($h['nama_hotel']) ?>"
-                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <button class="absolute top-4 right-4 bg-white/90 w-9 h-9 rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all shadow-md">
+
+        <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100">
+            <div class="relative h-56 overflow-hidden">
+                <img src="https://plus.unsplash.com/premium_photo-1675748924381-8051877f09c0?auto=format&fit=crop&w=800&q=80" alt="Hotel Indonesia" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <button class="wishlist-btn absolute top-4 right-4 bg-white/90 p-2 rounded-full w-9 h-9 flex items-center justify-center hover:scale-110 transition-all">
                     <i class="far fa-heart"></i>
                 </button>
-                <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-semibold flex items-center gap-1 backdrop-blur-sm">
-                    <i class="fas fa-star text-amber-400"></i>
-                    <span><?= number_format($rating, 1) ?></span>
+                <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-semibold flex items-center gap-1">
+                    <i class="fas fa-star text-yellow-400"></i> 5.0
                 </div>
             </div>
-
             <div class="p-5">
-                <div class="flex justify-between items-start gap-2 mb-3">
-                    <h3 class="text-sm font-bold leading-snug line-clamp-1"><?= htmlspecialchars($h['nama_hotel']) ?></h3>
-                    <div class="text-primary font-bold text-lg whitespace-nowrap">
-                        Rp<?= $price ?><span class="text-xs text-textLight font-normal">/malam</span>
-                    </div>
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-sm font-bold leading-tight flex-1">Hotel Indonesia Kempinski</h3>
+                    <div class="text-primary font-bold text-lg">Rp3.5jt<span class="text-xs text-text-light font-normal">/malam</span></div>
+                </div>
+                <div class="flex items-center gap-2 text-text-light text-xs font-medium mb-3">
+                    <i class="fas fa-map-marker-alt text-primary"></i> Jakarta Pusat
+                </div>
+                <p class="text-xs text-text-dark line-clamp-2 mb-4">Hotel bintang 5 bersejarah pertama di Indonesia dengan fasilitas mewah di pusat ibu kota.</p>
+
+                <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-100 mb-4 text-[11px] text-text-light font-medium">
+                    <span class="flex items-center gap-1"><i class="fas fa-wifi text-primary"></i> WiFi</span>
+                    <span class="flex items-center gap-1"><i class="fas fa-swimming-pool text-primary"></i> Pool</span>
+                    <span class="flex items-center gap-1"><i class="fas fa-utensils text-primary"></i> Resto</span>
                 </div>
 
-                <div class="flex items-center gap-2 text-textLight text-sm font-medium mb-3">
-                    <i class="fas fa-map-marker-alt text-primary"></i>
-                    <span class="truncate"><?= htmlspecialchars($h['alamat']) ?></span>
-                </div>
-
-                <p class="text-xs text-textLight line-clamp-2 leading-relaxed mb-4">
-                    <?= htmlspecialchars($h['deskripsi']) ?>
-                </p>
-
-                <div class="flex flex-wrap gap-3 pt-4 border-t border-gray-100 mb-5">
-                    <div class="flex items-center gap-1.5 text-xs text-textLight font-medium">
-                        <i class="fas fa-wifi text-primary/70"></i> WiFi
-                    </div>
-                    <div class="flex items-center gap-1.5 text-xs text-textLight font-medium">
-                        <i class="fas fa-swimming-pool text-primary/70"></i> Pool
-                    </div>
-                    <div class="flex items-center gap-1.5 text-xs text-textLight font-medium">
-                        <i class="fas fa-user text-primary/70"></i> <?= $kapasitas ?> orang
-                    </div>
-                </div>
-
-                <a href="detail.php?id=<?= $h['id_hotel'] ?>" class="block w-full text-center bg-primary text-white py-2.5 rounded-lg font-bold text-sm hover:bg-primaryDark transition-colors">
+                <a href="#" class="inline-block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold text-sm transition-colors">
                     Lihat Detail
                 </a>
             </div>
         </div>
-        <?php endwhile; ?>
-    </div>
-</main>
 
-<footer class="bg-lightGray pt-16 pb-8">
-    <div class="max-w-[1400px] mx-auto px-10">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-            <div>
-                <h3 class="font-bold text-lg mb-5">TripKuy</h3>
-                <ul class="space-y-3">
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Tentang</a></li>
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Karir</a></li>
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Blog</a></li>
-                </ul>
+        <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100">
+            <div class="relative h-56 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Gaia Hotel" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <button class="wishlist-btn absolute top-4 right-4 bg-white/90 p-2 rounded-full w-9 h-9 flex items-center justify-center hover:scale-110 transition-all">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-semibold flex items-center gap-1">
+                    <i class="fas fa-star text-yellow-400"></i> 4.3
+                </div>
             </div>
-            <div>
-                <h3 class="font-bold text-lg mb-5">Destinasi</h3>
-                <ul class="space-y-3">
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Jakarta</a></li>
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Bali</a></li>
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Bandung</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold text-lg mb-5">Partner</h3>
-                <ul class="space-y-3">
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Jadi Partner</a></li>
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Afiliasi</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold text-lg mb-5">Lainnya</h3>
-                <ul class="space-y-3">
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Syarat</a></li>
-                    <li><a href="#" class="text-textLight hover:text-primary transition-colors">Privasi</a></li>
-                </ul>
+            <div class="p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-sm font-bold leading-tight flex-1">The Gaia Hotel Bandung</h3>
+                    <div class="text-primary font-bold text-lg">Rp2.2jt<span class="text-xs text-text-light font-normal">/malam</span></div>
+                </div>
+                <div class="flex items-center gap-2 text-text-light text-xs font-medium mb-3">
+                    <i class="fas fa-map-marker-alt text-primary"></i> Bandung
+                </div>
+                <p class="text-xs text-text-dark line-clamp-2 mb-4">Resor kontemporer dengan konsep Active/Rest dan pemandangan pegunungan.</p>
+                <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-100 mb-4 text-[11px] text-text-light font-medium">
+                    <span class="flex items-center gap-1"><i class="fas fa-wifi text-primary"></i> WiFi</span>
+                    <span class="flex items-center gap-1"><i class="fas fa-mountain text-primary"></i> View</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold text-sm transition-colors">
+                    Lihat Detail
+                </a>
             </div>
         </div>
-        <div class="pt-8 border-t border-gray-200 text-center text-sm text-textLight">
-            &copy; 2024 TripKuy. All rights reserved.
+
+    </div>
+</div>
+
+<footer class="bg-gray-100 py-16 px-10 border-t border-gray-200">
+    <div class="max-w-[1400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center md:text-left">
+        <div>
+            <h3 class="font-bold mb-6 text-lg">TripKuy</h3>
+            <ul class="space-y-3 text-text-light text-sm font-medium">
+                <li><a href="#" class="hover:text-primary">Tentang</a></li>
+                <li><a href="#" class="hover:text-primary">Karir</a></li>
+                <li><a href="#" class="hover:text-primary">Blog</a></li>
+            </ul>
         </div>
+        <div>
+            <h3 class="font-bold mb-6 text-lg">Destinasi</h3>
+            <ul class="space-y-3 text-text-light text-sm font-medium">
+                <li><a href="#" class="hover:text-primary">Jakarta</a></li>
+                <li><a href="#" class="hover:text-primary">Bali</a></li>
+                <li><a href="#" class="hover:text-primary">Bandung</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="font-bold mb-6 text-lg">Partner</h3>
+            <ul class="space-y-3 text-text-light text-sm font-medium">
+                <li><a href="#" class="hover:text-primary">Jadi Partner</a></li>
+                <li><a href="#" class="hover:text-primary">Afiliasi</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="font-bold mb-6 text-lg">Lainnya</h3>
+            <ul class="space-y-3 text-text-light text-sm font-medium">
+                <li><a href="#" class="hover:text-primary">Syarat & Ketentuan</a></li>
+                <li><a href="#" class="hover:text-primary">Kebijakan Privasi</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="text-center mt-16 pt-8 border-t border-gray-200 text-text-light text-sm">
+        © 2024 TripKuy. All rights reserved.
     </div>
 </footer>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Wishlist functionality
+        const wishlistBtns = document.querySelectorAll(".wishlist-btn");
+        wishlistBtns.forEach((btn) => {
+            btn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                const icon = this.querySelector("i");
+                if (icon.classList.contains("far")) {
+                    icon.classList.remove("far");
+                    icon.classList.add("fas");
+                    this.classList.add("text-red-500");
+                } else {
+                    icon.classList.remove("fas");
+                    icon.classList.add("far");
+                    this.classList.remove("text-red-500");
+                }
+            });
+        });
+
+        // Filter tabs logic
+        const filterTabs = document.querySelectorAll(".filter-tab");
+        filterTabs.forEach((tab) => {
+            tab.addEventListener("click", function () {
+                filterTabs.forEach((t) => {
+                    t.classList.remove("bg-text-dark", "text-white");
+                    t.classList.add("bg-white", "text-text-dark");
+                });
+                this.classList.add("bg-text-dark", "text-white");
+                this.classList.remove("bg-white", "text-text-dark");
+            });
+        });
+    });
+</script>
 {% endblock %}
