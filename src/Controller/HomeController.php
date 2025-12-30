@@ -13,15 +13,9 @@ final class HomeController extends AbstractController
     public function index(HotelRepository $hotelRepository): Response
     {
         $hotels = $hotelRepository->findHotelWithMinHargaKamar();
-        return $this->render("home/index.html.twig", [
+        return $this->render("hotel/index.html.twig", [
             "controller_name" => "HomeController",
             "hotels" => $hotels,
         ]);
-    }
-
-    #[Route("/hotel/{id}", name: "hotel_detail")]
-    public function detail()
-    {
-        return new Response("Hello WOrld");
     }
 }
