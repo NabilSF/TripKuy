@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIPKUY - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <div class="sidebar-title">
+                    TRIP<span>KUY</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">MENU UTAMA</div>
+                    <div class="menu-item active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">MANAGEMENT HOTEL</div>
+                    <div class="menu-item" data-page="data-hotel">
+                        <i class="fas fa-hotel"></i>
+                        <span>Data Hotel</span>
+                    </div>
+                    <div class="menu-item" data-page="management-kamar">
+                        <i class="fas fa-bed"></i>
+                        <span>Management Kamar</span>
+                    </div>
+                    <div class="menu-item" data-page="harga-promo">
+                        <i class="fas fa-tag"></i>
+                        <span>Harga & Promo</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">OPERASIONAL</div>
+                    <div class="menu-item" data-page="reservasi">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Reservasi</span>
+                        <span class="menu-badge">42</span>
+                    </div>
+                    <div class="menu-item" data-page="checkin-out">
+                        <i class="fas fa-key"></i>
+                        <span>Check-in/out</span>
+                        <span class="menu-badge">8</span>
+                    </div>
+                    <div class="menu-item" data-page="pelanggan">
+                        <i class="fas fa-users"></i>
+                        <span>Pelanggan</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1 id="pageHeader">Dashboard Admin</h1>
+                        <p id="pageSubtitle">Selamat datang kembali, Admin TRIPKUY!</p>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">AK</div>
+                        <div class="user-info">
+                            <h4>Admin Hotel</h4>
+                            <p>Super Administrator</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Page -->
+                <div id="dashboard" class="page-content active">
+                    <section class="hero-section">
+                        <div class="hero-content">
+                            <h2>TRIPKUY Hotel Management</h2>
+                            <p>Kelola semua properti hotel Anda dengan mudah dari satu dashboard terpusat.</p>
+                        </div>
+                    </section>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card" onclick="showHotelList()">
+                            <div class="stat-header">
+                                <div class="stat-icon hotel">
+                                    <i class="fas fa-hotel"></i>
+                                </div>
+                                <span class="stat-trend">+3</span>
+                            </div>
+                            <div class="stat-value">20</div>
+                            <div class="stat-label">Total Hotel</div>
+                        </div>
+                        
+                        <div class="stat-card" onclick="alert('Occupancy Rate: 78%')">
+                            <div class="stat-header">
+                                <div class="stat-icon occupancy">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span class="stat-trend">+5.2%</span>
+                            </div>
+                            <div class="stat-value">78%</div>
+                            <div class="stat-label">Occupancy Rate</div>
+                        </div>
+                        
+                        <div class="stat-card" onclick="showPage('reservasi')">
+                            <div class="stat-header">
+                                <div class="stat-icon booking">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <span class="stat-trend">+12</span>
+                            </div>
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Booking Aktif</div>
+                        </div>
+                        
+                        <div class="stat-card" onclick="alert('Revenue Bulanan: Rp 254.3 Juta')">
+                            <div class="stat-header">
+                                <div class="stat-icon revenue">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <span class="stat-trend">+18.5%</span>
+                            </div>
+                            <div class="stat-value">Rp 254.3JT</div>
+                            <div class="stat-label">Revenue Bulanan</div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Terpopuler & Quick Actions -->
+                    <div class="hotel-section">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3><i class="fas fa-crown"></i> Hotel Terpopuler</h3>
+                            </div>
+                            <div class="section-body">
+                                <div class="hotel-grid" id="popularHotels"></div>
+                            </div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3><i class="fas fa-bolt"></i> Aksi Cepat</h3>
+                            </div>
+                            <div class="section-body">
+                                <div class="quick-actions-grid">
+                                    <div class="action-button" onclick="addHotel()">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Tambah Hotel</span>
+                                    </div>
+                                    <div class="action-button" onclick="addRoom()">
+                                        <i class="fas fa-bed"></i>
+                                        <span>Tambah Kamar</span>
+                                    </div>
+                                    <div class="action-button" onclick="showPage('harga-promo')">
+                                        <i class="fas fa-tag"></i>
+                                        <span>Buat Promo</span>
+                                    </div>
+                                    <div class="action-button" onclick="openSettings()">
+                                        <i class="fas fa-cog"></i>
+                                        <span>Settings</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <script src="script.js"></script>
+</body>
+</html>

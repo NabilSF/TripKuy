@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIPKUY - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <div class="sidebar-title">
+                    TRIP<span>KUY</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">MENU UTAMA</div>
+                    <div class="menu-item active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">MANAGEMENT HOTEL</div>
+                    <div class="menu-item" data-page="data-hotel">
+                        <i class="fas fa-hotel"></i>
+                        <span>Data Hotel</span>
+                    </div>
+                    <div class="menu-item" data-page="management-kamar">
+                        <i class="fas fa-bed"></i>
+                        <span>Management Kamar</span>
+                    </div>
+                    <div class="menu-item" data-page="harga-promo">
+                        <i class="fas fa-tag"></i>
+                        <span>Harga & Promo</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">OPERASIONAL</div>
+                    <div class="menu-item" data-page="reservasi">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Reservasi</span>
+                        <span class="menu-badge">42</span>
+                    </div>
+                    <div class="menu-item" data-page="checkin-out">
+                        <i class="fas fa-key"></i>
+                        <span>Check-in/out</span>
+                        <span class="menu-badge">8</span>
+                    </div>
+                    <div class="menu-item" data-page="pelanggan">
+                        <i class="fas fa-users"></i>
+                        <span>Pelanggan</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1 id="pageHeader">Dashboard Admin</h1>
+                        <p id="pageSubtitle">Selamat datang kembali, Admin TRIPKUY!</p>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">AK</div>
+                        <div class="user-info">
+                            <h4>Admin Hotel</h4>
+                            <p>Super Administrator</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+    <!-- Management Kamar Page - SEDERHANA -->
+                <div id="management-kamar" class="page-content">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3><i class="fas fa-bed"></i> Management Kamar</h3>
+                            <button class="btn btn-primary" onclick="addRoom()">
+                                <i class="fas fa-plus"></i> Tambah Tipe Kamar
+                            </button>
+                        </div>
+                        <div class="section-body">
+                            <div class="room-management">
+                                <div class="room-types">
+                                    <h3 style="margin-bottom: 20px;">Tipe Kamar</h3>
+                                    <div class="room-type-item active" data-room="deluxe">
+                                        <div class="room-icon">
+                                            <i class="fas fa-crown"></i>
+                                        </div>
+                                        <span>Deluxe Room</span>
+                                    </div>
+                                    <div class="room-type-item" data-room="executive">
+                                        <div class="room-icon">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span>Executive Suite</span>
+                                    </div>
+                                    <div class="room-type-item" data-room="presidential">
+                                        <div class="room-icon">
+                                            <i class="fas fa-gem"></i>
+                                        </div>
+                                        <span>Presidential Suite</span>
+                                    </div>
+                                    <div class="room-type-item" data-room="family">
+                                        <div class="room-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <span>Family Room</span>
+                                    </div>
+                                    <div class="room-type-item" data-room="standard">
+                                        <div class="room-icon">
+                                            <i class="fas fa-home"></i>
+                                        </div>
+                                        <span>Standard Room</span>
+                                    </div>
+                                    <div class="room-type-item" data-room="honeymoon">
+                                        <div class="room-icon">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <span>Honeymoon Suite</span>
+                                    </div>
+                                </div>
+                                <div class="room-details" id="roomDetails">
+                                    <!-- Room details will be dynamically loaded here -->
+                                    <div class="room-header">
+                                        <h3>Deluxe Room</h3>
+                                    </div>
+                                    <div class="room-specs">
+                                        <div class="spec-item">
+                                            <div class="spec-value">30 m²</div>
+                                            <div class="spec-label">Ukuran Kamar</div>
+                                        </div>
+                                        <div class="spec-item">
+                                            <div class="spec-value">2</div>
+                                            <div class="spec-label">Kapasitas</div>
+                                        </div>
+                                    </div>
+                                    <p>Kamar Deluxe dengan pemandangan kota, dilengkapi dengan tempat tidur king size, TV LED 42", mini bar, dan fasilitas lengkap untuk kenyamanan maksimal.</p>
+                                    
+                                    <div class="room-features">
+                                        <h4>Fasilitas Kamar:</h4>
+                                        <div class="features-grid">
+                                            <div class="feature-item">
+                                                <i class="fas fa-wifi"></i>
+                                                <span>Wi-Fi Gratis</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <i class="fas fa-tv"></i>
+                                                <span>TV Kabel</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <i class="fas fa-snowflake"></i>
+                                                <span>AC</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <i class="fas fa-bath"></i>
+                                                <span>Bathub</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <i class="fas fa-coffee"></i>
+                                                <span>Minibar</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <i class="fas fa-lock"></i>
+                                                <span>Safe Deposit Box</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="room-actions">
+                                        <button class="btn btn-primary" onclick="editRoom('deluxe')">
+                                            <i class="fas fa-edit"></i> Edit Kamar
+                                        </button>
+                                        <button class="btn btn-secondary" onclick="viewRoomStats('deluxe')">
+                                            <i class="fas fa-chart-bar"></i> Lihat Statistik
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <script src="script.js"></script>
+</body>
+</html>

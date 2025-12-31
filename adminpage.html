@@ -1317,421 +1317,277 @@
         </main>
     </div>
 
+    <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripKuy Admin - Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-item.active { @apply bg-blue-600 text-white; }
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-gray-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fas fa-plane-departure text-blue-500"></i> TRIPKUY
+                </h1>
+                <p class="text-xs text-gray-500 mt-1 font-medium text-center uppercase tracking-widest">Admin Panel</p>
+            </div>
+
+            <nav class="mt-4 px-4 space-y-2">
+                <button data-page="dashboard" class="menu-item sidebar-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-th-large w-5"></i> Dashboard
+                </button>
+                <button data-page="data-hotel" class="menu-item sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-hotel w-5"></i> Data Hotel
+                </button>
+                <button data-page="management-kamar" class="menu-item sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-bed w-5"></i> Management Kamar
+                </button>
+                <button data-page="harga-promo" class="menu-item sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-tags w-5"></i> Harga & Promo
+                </button>
+                <div class="pt-4 pb-2 text-xs font-semibold text-gray-500 uppercase px-4">Transaksi</div>
+                <button data-page="reservasi" class="menu-item sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-calendar-check w-5"></i> Reservasi
+                </button>
+                <button data-page="pelanggan" class="menu-item sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-users w-5"></i> Pelanggan
+                </button>
+            </nav>
+
+            <div class="absolute bottom-0 w-full p-4 border-t border-slate-800">
+                <button onclick="openSettings()" class="flex items-center gap-3 px-4 py-2 text-sm hover:text-white transition">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 lg:ml-64 transition-all duration-300">
+            <header class="bg-white border-b sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <button id="menuToggle" class="lg:hidden text-gray-600 text-xl"><i class="fas fa-bars"></i></button>
+                    <div>
+                        <h2 id="pageHeader" class="text-xl font-bold text-gray-800 leading-none">Dashboard Admin</h2>
+                        <p id="pageSubtitle" class="text-sm text-gray-500 mt-1 uppercase tracking-tighter">Memuat data...</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 text-gray-600">
+                    <div class="hidden md:block text-right">
+                        <p class="text-sm font-semibold text-gray-900">Wava Al Qudsi</p>
+                        <p class="text-xs">Administrator</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">WA</div>
+                </div>
+            </header>
+
+            <div class="p-6 max-w-7xl mx-auto">
+                
+                <section id="dashboard" class="page-content active space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="flex justify-between items-start">
+                                <div><p class="text-sm text-gray-500">Total Hotel</p><h3 class="text-2xl font-bold mt-1">128</h3></div>
+                                <div class="p-2 bg-blue-50 text-blue-600 rounded-lg"><i class="fas fa-hotel"></i></div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="flex justify-between items-start">
+                                <div><p class="text-sm text-gray-500">Reservasi Baru</p><h3 class="text-2xl font-bold mt-1">45</h3></div>
+                                <div class="p-2 bg-green-50 text-green-600 rounded-lg"><i class="fas fa-calendar-check"></i></div>
+                            </div>
+                        </div>
+                        </div>
+
+                    <div class="flex justify-between items-end">
+                        <h3 class="text-lg font-bold">Hotel Terpopuler</h3>
+                        <button onclick="showHotelList()" class="text-blue-600 text-sm font-medium hover:underline">Lihat Semua</button>
+                    </div>
+                    <div id="popularHotels" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        </div>
+                </section>
+
+                <section id="data-hotel" class="page-content space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-bold">Daftar Mitra Hotel</h3>
+                        <button onclick="addHotel()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition">
+                            <i class="fas fa-plus mr-2"></i> Tambah Hotel
+                        </button>
+                    </div>
+                    <div id="hotelList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        </div>
+                </section>
+
+                <section id="management-kamar" class="page-content space-y-6">
+                    <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div class="flex flex-col md:flex-row">
+                            <div class="w-full md:w-64 bg-gray-50 border-r p-4 space-y-2" id="roomTypeMenu">
+                                <button data-room="standard" class="room-type-item active w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm transition">Standard Room</button>
+                                <button data-room="deluxe" class="room-type-item w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm transition">Deluxe Room</button>
+                                <button data-room="executive" class="room-type-item w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm transition">Executive Suite</button>
+                                <button data-room="presidential" class="room-type-item w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm transition">Presidential Suite</button>
+                            </div>
+                            <div class="flex-1 p-8" id="roomDetails">
+                                </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="harga-promo" class="page-content p-12 text-center">
+                    <i class="fas fa-tools text-5xl text-gray-300 mb-4"></i>
+                    <h2 class="text-xl font-bold">Fitur Harga & Promo</h2>
+                    <p class="text-gray-500">Sedang dalam pengembangan backend.</p>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
     <script>
-        // Data Hotel Dummy
+        // --- DATA LAYER ---
         const hotels = [
-            { id: 1, name: 'Hotel Indonesia Kempinski', email: 'info.jakarta@kempinski.com', address: 'Jl. MH Thamrin No. 1, Menteng, Jakarta Pusat', phone: '(021) 23583800', description: 'Hotel bintang 5 bersejarah pertama di Indonesia dengan fasilitas mewah di pusat ibu kota.', rating: 4.8, city: 'Jakarta', rooms: 45 },
-            { id: 2, name: 'The Gaia Hotel Bandung', email: 'reservation@thegaiabandung.com', address: 'Jl. Dr. Setiabudi No. 430, Ledeng, Bandung', phone: '(022) 20280780', description: 'Resor kontemporer yang menawarkan konsep Active/Rest dengan pemandangan pegunungan Bandung.', rating: 4.7, city: 'Bandung', rooms: 32 },
-            { id: 3, name: 'Hotel Tentrem Yogyakarta', email: 'info.jogja@hoteltentrem.com', address: 'Jl. AM. Sangaji No. 72-74, Yogyakarta', phone: '(0274) 6415555', description: 'Hotel mewah yang menggabungkan keramahan tradisional Jawa dengan fasilitas modern.', rating: 4.6, city: 'Yogyakarta', rooms: 28 },
-            { id: 4, name: 'Pullman Lombok Merujani', email: 'all_reservation@pullman-lombok.com', address: 'ITDC Mandalika Tourism Complex, Kuta, Lombok Tengah', phone: '(0370) 7525100', description: 'Resor tepi pantai bintang 5 yang eksklusif di dekat Sirkuit Internasional Mandalika.', rating: 4.9, city: 'Lombok', rooms: 56 },
-            { id: 5, name: 'CLARO Makassar', email: 'info@claromakassar.com', address: 'Jl. A. P. Pettarani No. 03, Makassar', phone: '(0411) 833888', description: 'Hotel bisnis terbesar di Makassar dengan fasilitas konvensi yang sangat lengkap.', rating: 4.5, city: 'Makassar', rooms: 40 }
+            { id: 1, name: 'Hotel Indonesia Kempinski', email: 'info.jakarta@kempinski.com', address: 'Jl. MH Thamrin No. 1, Jakarta Pusat', phone: '(021) 23583800', description: 'Hotel bintang 5 bersejarah dengan fasilitas mewah.', rating: 4.8, city: 'Jakarta' },
+            { id: 2, name: 'The Gaia Hotel Bandung', email: 'reservation@thegaiabandung.com', address: 'Jl. Dr. Setiabudi No. 430, Bandung', phone: '(022) 20280780', description: 'Resor kontemporer dengan konsep Active/Rest.', rating: 4.7, city: 'Bandung' },
+            { id: 3, name: 'Hotel Tentrem Yogyakarta', email: 'info.jogja@hoteltentrem.com', address: 'Jl. AM. Sangaji No. 72-74, Yogyakarta', phone: '(0274) 6415555', description: 'Kemewahan dengan keramahan tradisional Jawa.', rating: 4.6, city: 'Yogyakarta' }
         ];
 
-        // Data Kamar Dummy SEDERHANA
         const roomTypes = {
-            'deluxe': {
-                name: 'Deluxe Room',
-                size: '30 m²',
-                capacity: 2,
-                description: 'Kamar Deluxe dengan pemandangan kota, dilengkapi dengan tempat tidur king size, TV LED 42", mini bar, dan fasilitas lengkap untuk kenyamanan maksimal.',
-                features: [
-                    'Wi-Fi Gratis', 'TV Kabel', 'AC', 'Bathub', 'Minibar', 'Safe Deposit Box'
-                ],
-                icon: 'crown'
-            },
-            'executive': {
-                name: 'Executive Suite',
-                size: '45 m²',
-                capacity: 2,
-                description: 'Suite eksklusif dengan ruang kerja terpisah, pemandangan kota spektakuler, dan fasilitas premium untuk eksekutif.',
-                features: [
-                    'Executive Lounge Access', 'Private Check-in', 'Work Desk', 'Meeting Room Access',
-                    'Complimentary Breakfast', 'Evening Cocktails'
-                ],
-                icon: 'star'
-            },
-            'presidential': {
-                name: 'Presidential Suite',
-                size: '120 m²',
-                capacity: 4,
-                description: 'Suite terbaik dengan 2 kamar tidur, ruang tamu besar, dapur kecil, dan pelayanan butler pribadi 24 jam.',
-                features: [
-                    'Private Butler', 'Jacuzzi', 'Dining Room', 'Full Kitchen',
-                    'Home Theater', 'Private Gym Access'
-                ],
-                icon: 'gem'
-            },
-            'family': {
-                name: 'Family Room',
-                size: '40 m²',
-                capacity: 4,
-                description: 'Kamar luas dengan 2 double bed, area bermain anak, dan fasilitas keluarga lengkap untuk liburan bersama.',
-                features: [
-                    '2 Double Beds', 'Kids Play Area', 'Baby Cot Available', 'Family Board Games',
-                    'Kids Menu', 'Swimming Pool Access'
-                ],
-                icon: 'users'
-            },
-            'standard': {
-                name: 'Standard Room',
-                size: '25 m²',
-                capacity: 2,
-                description: 'Kamar standar yang nyaman dengan fasilitas lengkap untuk akomodasi hemat namun tetap berkualitas.',
-                features: [
-                    'Queen Size Bed', 'TV LED 32"', 'Shower', 'Free Toiletries',
-                    'Desk & Chair', 'Telephone'
-                ],
-                icon: 'home'
-            },
-            'honeymoon': {
-                name: 'Honeymoon Suite',
-                size: '50 m²',
-                capacity: 2,
-                description: 'Suite romantis dengan dekorasi khusus, pemandangan matahari terbenam, dan fasilitas khusus untuk pasangan.',
-                features: [
-                    'Romantic Decor', 'Champagne & Chocolate', 'Flower Petals', 'Couples Massage',
-                    'Candlelight Dinner', 'Private Balcony'
-                ],
-                icon: 'heart'
-            }
+            standard: { name: 'Standard Room', size: '25 m²', capacity: 2, description: 'Kamar standar nyaman untuk budget traveler.', features: ['Queen Size Bed', 'Free Wi-Fi', 'AC', 'Shower'] },
+            deluxe: { name: 'Deluxe Room', size: '30 m²', capacity: 2, description: 'Pemandangan kota dengan fasilitas lengkap.', features: ['King Size Bed', 'Minibar', 'Smart TV', 'Bathub'] },
+            executive: { name: 'Executive Suite', size: '45 m²', capacity: 2, description: 'Suite mewah dengan akses lounge eksklusif.', features: ['Lounge Access', 'Work Desk', 'Breakfast Included'] },
+            presidential: { name: 'Presidential Suite', size: '120 m²', capacity: 4, description: 'Pelayanan butler 24 jam dan ruang tamu luas.', features: ['Private Butler', 'Jacuzzi', 'Kitchenette'] }
         };
 
-        // Hotel images for display
-        const hotelImages = [
-            'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1564501049418-3c27787d01e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
-        ];
-
-        // DOM Elements
-        let currentPage = 'dashboard';
-        const pageTitles = {
-            'dashboard': 'Dashboard Admin',
-            'data-hotel': 'Data Hotel',
-            'management-kamar': 'Management Kamar',
-            'harga-promo': 'Harga & Promo',
-            'reservasi': 'Reservasi',
-            'checkin-out': 'Check-in/out',
-            'pelanggan': 'Pelanggan'
-        };
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize menu
-            setupMenu();
-            
-            // Load popular hotels
-            loadPopularHotels();
-            
-            // Load hotel list
-            loadHotelList();
-            
-            // Setup room type selection
-            setupRoomTypes();
-            
-            // Set current date
-            updateDate();
-            
-            // Mobile menu toggle
-            document.getElementById('menuToggle').addEventListener('click', function() {
-                document.querySelector('.sidebar').classList.toggle('active');
-            });
+        // --- APP LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu();
+            renderPopularHotels();
+            renderHotelList();
+            initRoomSelection();
+            updateTime();
+            setInterval(updateTime, 60000);
         });
 
-        // Setup menu functionality
-        function setupMenu() {
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const page = this.getAttribute('data-page');
+        function initMenu() {
+            document.querySelectorAll('.menu-item').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pageId = btn.getAttribute('data-page');
                     
-                    // Update active menu
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
+                    // Toggle Active Sidebar
+                    document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active', 'bg-blue-600', 'text-white'));
+                    btn.classList.add('active', 'bg-blue-600', 'text-white');
+
+                    // Switch Page
+                    document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+                    document.getElementById(pageId).classList.add('active');
+
+                    // Update Header
+                    const titles = { 'dashboard': 'Dashboard Admin', 'data-hotel': 'Data Hotel', 'management-kamar': 'Management Kamar' };
+                    document.getElementById('pageHeader').innerText = titles[pageId] || pageId.replace('-', ' ');
                     
-                    // Show page
-                    showPage(page);
-                    
-                    // Close sidebar on mobile
-                    if (window.innerWidth <= 992) {
-                        document.querySelector('.sidebar').classList.remove('active');
-                    }
+                    if(window.innerWidth < 1024) toggleSidebar();
                 });
             });
+
+            document.getElementById('menuToggle').addEventListener('click', toggleSidebar);
         }
 
-        // Setup room type selection
-        function setupRoomTypes() {
-            const roomItems = document.querySelectorAll('.room-type-item');
-            roomItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const roomType = this.getAttribute('data-room');
-                    
-                    // Update active room
-                    roomItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Load room details
-                    loadRoomDetails(roomType);
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        }
+
+        function renderPopularHotels() {
+            const container = document.getElementById('popularHotels');
+            container.innerHTML = hotels.map(h => `
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition cursor-pointer">
+                    <div class="h-40 bg-gray-200 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400')"></div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-gray-900">${h.name}</h4>
+                        <div class="flex items-center text-xs text-gray-500 mt-1 gap-3">
+                            <span><i class="fas fa-map-marker-alt text-blue-500"></i> ${h.city}</span>
+                            <span class="text-orange-500 font-bold"><i class="fas fa-star"></i> ${h.rating}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderHotelList() {
+            const container = document.getElementById('hotelList');
+            container.innerHTML = hotels.map(h => `
+                <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[10px] bg-gray-100 px-2 py-1 rounded text-gray-500 font-bold">ID: ${h.id}</span>
+                            <h4 class="text-lg font-bold mt-1">${h.name}</h4>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="p-2 text-blue-600 hover:bg-blue-50 rounded"><i class="fas fa-edit"></i></button>
+                            <button class="p-2 text-red-600 hover:bg-red-50 rounded"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                        <div class="flex items-center gap-2"><i class="fas fa-phone text-gray-400"></i> ${h.phone}</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-envelope text-gray-400"></i> ${h.email}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initRoomSelection() {
+            const btns = document.querySelectorAll('.room-type-item');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btns.forEach(b => b.classList.remove('active', 'bg-white', 'shadow-sm', 'font-bold'));
+                    btn.classList.add('active', 'bg-white', 'shadow-sm', 'font-bold');
+                    renderRoomDetail(btn.getAttribute('data-room'));
                 });
             });
+            renderRoomDetail('standard');
         }
 
-        // Load room details
-        function loadRoomDetails(roomType) {
-            const room = roomTypes[roomType];
-            if (!room) return;
-            
-            const roomDetails = document.getElementById('roomDetails');
-            
-            // Generate features HTML
-            const featuresHtml = room.features.map(feature => 
-                `<div class="feature-item">
-                    <i class="fas fa-check"></i>
-                    <span>${feature}</span>
-                </div>`
-            ).join('');
-            
-            roomDetails.innerHTML = `
-                <div class="room-header">
-                    <h3>${room.name}</h3>
-                </div>
-                <div class="room-specs">
-                    <div class="spec-item">
-                        <div class="spec-value">${room.size}</div>
-                        <div class="spec-label">Ukuran Kamar</div>
+        function renderRoomDetail(type) {
+            const room = roomTypes[type];
+            document.getElementById('roomDetails').innerHTML = `
+                <div class="animate-fadeIn">
+                    <h3 class="text-2xl font-bold mb-2">${room.name}</h3>
+                    <div class="flex gap-4 mb-6 text-sm">
+                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full"><i class="fas fa-expand mr-1"></i> ${room.size}</span>
+                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full"><i class="fas fa-user-friends mr-1"></i> ${room.capacity} Orang</span>
                     </div>
-                    <div class="spec-item">
-                        <div class="spec-value">${room.capacity}</div>
-                        <div class="spec-label">Kapasitas</div>
+                    <p class="text-gray-600 mb-6 leading-relaxed">${room.description}</p>
+                    <h4 class="font-bold mb-4">Fasilitas Utama:</h4>
+                    <div class="grid grid-cols-2 gap-3 mb-8">
+                        ${room.features.map(f => `<div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-check-circle text-green-500"></i> ${f}</div>`).join('')}
                     </div>
-                </div>
-                <p>${room.description}</p>
-                
-                <div class="room-features">
-                    <h4>Fasilitas Kamar:</h4>
-                    <div class="features-grid">
-                        ${featuresHtml}
+                    <div class="flex gap-3">
+                        <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Edit Tipe Kamar</button>
+                        <button class="border border-gray-200 px-6 py-2 rounded-lg hover:bg-gray-50 transition">Lihat Statistik</button>
                     </div>
-                </div>
-                
-                <div class="room-actions">
-                    <button class="btn btn-primary" onclick="editRoom('${roomType}')">
-                        <i class="fas fa-edit"></i> Edit Kamar
-                    </button>
-                    <button class="btn btn-secondary" onclick="viewRoomStats('${roomType}')">
-                        <i class="fas fa-chart-bar"></i> Lihat Statistik
-                    </button>
                 </div>
             `;
         }
 
-        // Show specific page
-        function showPage(page) {
-            // Hide all pages
-            document.querySelectorAll('.page-content').forEach(p => {
-                p.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(page).classList.add('active');
-            
-            // Update page header
-            document.getElementById('pageHeader').textContent = pageTitles[page];
-            
-            // Update current page
-            currentPage = page;
-            
-            // Update subtitle
-            updateSubtitle();
+        function updateTime() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = new Date().toLocaleDateString('id-ID', options);
+            document.getElementById('pageSubtitle').innerText = `Admin TripKuy • ${dateStr}`;
         }
 
-        // Update subtitle with current date
-        function updateDate() {
-            const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            };
-            const dateString = now.toLocaleDateString('id-ID', options);
-            
-            // Update dashboard subtitle
-            const subtitle = document.getElementById('pageSubtitle');
-            if (currentPage === 'dashboard') {
-                subtitle.textContent = `Selamat datang kembali, Admin TRIPKUY! • ${dateString}`;
-            } else {
-                subtitle.textContent = pageTitles[currentPage] + ' • ' + dateString;
-            }
-        }
+        function openSettings() { alert("Buka pengaturan sistem..."); }
+        function addHotel() { alert("Buka modal tambah hotel..."); }
+        function showHotelList() { document.querySelector('[data-page="data-hotel"]').click(); }
 
-        // Update subtitle based on page
-        function updateSubtitle() {
-            const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            };
-            const dateString = now.toLocaleDateString('id-ID', options);
-            
-            const subtitle = document.getElementById('pageSubtitle');
-            subtitle.textContent = pageTitles[currentPage] + ' • ' + dateString;
-        }
-
-        // Load popular hotels
-        function loadPopularHotels() {
-            const container = document.getElementById('popularHotels');
-            container.innerHTML = '';
-            
-            // Get top 3 hotels
-            const popularHotels = hotels.slice(0, 3);
-            
-            popularHotels.forEach((hotel, index) => {
-                const availableRooms = Math.floor(Math.random() * 20) + 5;
-                const statusClass = availableRooms > 10 ? 'status-available' : 
-                                   availableRooms > 3 ? 'status-limited' : 'status-full';
-                const statusText = availableRooms > 10 ? `${availableRooms} Kamar Tersedia` :
-                                  availableRooms > 3 ? `Hanya ${availableRooms} Kamar` : 'Hampir Penuh';
-                
-                const hotelCard = document.createElement('div');
-                hotelCard.className = 'hotel-card';
-                hotelCard.onclick = () => showHotelDetail(hotel.id);
-                
-                hotelCard.innerHTML = `
-                    <img src="${hotelImages[index % hotelImages.length]}" alt="${hotel.name}" class="hotel-image">
-                    <div class="hotel-info">
-                        <h3 class="hotel-name">${hotel.name}</h3>
-                        <div class="hotel-meta">
-                            <span><i class="fas fa-map-marker-alt"></i> ${hotel.city}</span>
-                            <div class="hotel-rating">
-                                <i class="fas fa-star"></i>
-                                <span>${hotel.rating}</span>
-                            </div>
-                        </div>
-                        <span class="hotel-status ${statusClass}">${statusText}</span>
-                    </div>
-                `;
-                
-                container.appendChild(hotelCard);
-            });
-        }
-
-        // Load hotel list
-        function loadHotelList() {
-            const container = document.getElementById('hotelList');
-            container.innerHTML = '';
-            
-            hotels.forEach(hotel => {
-                const hotelCard = document.createElement('div');
-                hotelCard.className = 'hotel-detail-card';
-                
-                hotelCard.innerHTML = `
-                    <div class="hotel-detail-header">
-                        <div class="hotel-id">ID: ${hotel.id}</div>
-                        <h3>${hotel.name}</h3>
-                        <div style="color: var(--primary); font-weight: 500;">
-                            <i class="fas fa-map-marker-alt"></i> ${hotel.city}
-                        </div>
-                    </div>
-                    <div class="hotel-detail-body">
-                        <div class="hotel-info-row">
-                            <i class="fas fa-envelope"></i>
-                            <span>${hotel.email}</span>
-                        </div>
-                        <div class="hotel-info-row">
-                            <i class="fas fa-phone"></i>
-                            <span>${hotel.phone}</span>
-                        </div>
-                        <div class="hotel-info-row">
-                            <i class="fas fa-home"></i>
-                            <span>${hotel.address}</span>
-                        </div>
-                        <div class="hotel-info-row">
-                            <i class="fas fa-info-circle"></i>
-                            <span>${hotel.description}</span>
-                        </div>
-                        <div class="hotel-actions">
-                            <button class="btn btn-primary" onclick="editHotel(${hotel.id})">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-secondary" onclick="viewHotel(${hotel.id})">
-                                <i class="fas fa-eye"></i> Detail
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                container.appendChild(hotelCard);
-            });
-        }
-
-        // Room management functions
-        function editRoom(roomType) {
-            const room = roomTypes[roomType];
-            alert(`Edit Kamar: ${room.name}\n\nUkuran: ${room.size}\nKapasitas: ${room.capacity}\n\nFitur edit lengkap akan dihandle oleh backend developer.`);
-        }
-
-        function viewRoomStats(roomType) {
-            const room = roomTypes[roomType];
-            alert(`Statistik Kamar: ${room.name}\n\nData statistik akan diambil dari database oleh backend developer.`);
-        }
-
-        // Show hotel list from dashboard
-        function showHotelList() {
-            showPage('data-hotel');
-        }
-
-        // Show hotel detail
-        function showHotelDetail(id) {
-            const hotel = hotels.find(h => h.id === id);
-            if (hotel) {
-                alert(`Detail Hotel:\n\nNama: ${hotel.name}\nLokasi: ${hotel.city}\nAlamat: ${hotel.address}\nTelepon: ${hotel.phone}\nEmail: ${hotel.email}\n\n${hotel.description}`);
-            }
-        }
-
-        // Edit hotel
-        function editHotel(id) {
-            const hotel = hotels.find(h => h.id === id);
-            if (hotel) {
-                alert(`Edit Hotel: ${hotel.name}\n\nFitur edit akan diintegrasikan dengan backend.`);
-            }
-        }
-
-        // View hotel
-        function viewHotel(id) {
-            const hotel = hotels.find(h => h.id === id);
-            if (hotel) {
-                alert(`Lihat Hotel: ${hotel.name}\n\nDetail lengkap akan diambil dari database oleh backend.`);
-            }
-        }
-
-        // Add hotel
-        function addHotel() {
-            alert('Fitur Tambah Hotel:\n\nForm untuk menambah hotel baru akan diintegrasikan dengan backend.');
-        }
-
-        // Add room
-        function addRoom() {
-            alert('Fitur Tambah Kamar:\n\nForm untuk menambah tipe kamar baru akan diintegrasikan dengan backend.');
-        }
-
-        // Create promo
-        function createPromo() {
-            alert('Fitur Buat Promo:\n\nForm untuk membuat promo baru akan diintegrasikan dengan backend.');
-        }
-
-        // Open settings
-        function openSettings() {
-            alert('Pengaturan Sistem\n\nFitur pengaturan akan diintegrasikan dengan backend.');
-        }
-
-        // Update date every minute
-        setInterval(updateDate, 60000);
     </script>
 </body>
 </html>

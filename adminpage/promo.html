@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIPKUY - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <div class="sidebar-title">
+                    TRIP<span>KUY</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">MENU UTAMA</div>
+                    <div class="menu-item active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">MANAGEMENT HOTEL</div>
+                    <div class="menu-item" data-page="data-hotel">
+                        <i class="fas fa-hotel"></i>
+                        <span>Data Hotel</span>
+                    </div>
+                    <div class="menu-item" data-page="management-kamar">
+                        <i class="fas fa-bed"></i>
+                        <span>Management Kamar</span>
+                    </div>
+                    <div class="menu-item" data-page="harga-promo">
+                        <i class="fas fa-tag"></i>
+                        <span>Harga & Promo</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">OPERASIONAL</div>
+                    <div class="menu-item" data-page="reservasi">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Reservasi</span>
+                        <span class="menu-badge">42</span>
+                    </div>
+                    <div class="menu-item" data-page="checkin-out">
+                        <i class="fas fa-key"></i>
+                        <span>Check-in/out</span>
+                        <span class="menu-badge">8</span>
+                    </div>
+                    <div class="menu-item" data-page="pelanggan">
+                        <i class="fas fa-users"></i>
+                        <span>Pelanggan</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1 id="pageHeader">Dashboard Admin</h1>
+                        <p id="pageSubtitle">Selamat datang kembali, Admin TRIPKUY!</p>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">AK</div>
+                        <div class="user-info">
+                            <h4>Admin Hotel</h4>
+                            <p>Super Administrator</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+    <!-- Harga & Promo Page -->
+                <div id="harga-promo" class="page-content">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3><i class="fas fa-tag"></i> Harga & Promo</h3>
+                            <button class="btn btn-primary" onclick="createPromo()">
+                                <i class="fas fa-plus"></i> Buat Promo Baru
+                            </button>
+                        </div>
+                        <div class="section-body">
+                            <p style="text-align: center; padding: 50px; color: var(--text-light);">
+                                <i class="fas fa-tag" style="font-size: 48px; margin-bottom: 20px; color: var(--primary);"></i><br>
+                                Halaman Harga & Promo untuk mengatur tarif dan diskon<br>
+                                Fitur ini dalam pengembangan...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+<script src="script.js"></script>
+</body>
+</html>
