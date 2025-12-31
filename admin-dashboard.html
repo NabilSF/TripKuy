@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIPKUY - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2aa090;
+            --secondary: #222222;
+            --accent: #00A699;
+            --primary-light: #e6f5f3;
+            --primary-dark: #1a8c7c;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #222222;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px -5px rgba(42, 160, 144, 0.15);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--secondary) 0%, #333333 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: var(--transition);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sidebar-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .sidebar-title span {
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-section {
+            padding: 0 20px;
+            margin-bottom: 25px;
+        }
+
+        .menu-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(42, 160, 144, 0.3);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            background: var(--primary);
+            color: white;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* TOP NAVBAR */
+        .top-navbar {
+            background: var(--bg-white);
+            padding: 0 30px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-toggle {
+            background: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            display: none;
+            cursor: pointer;
+            border: none;
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+            color: var(--text-dark);
+        }
+
+        .page-title p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            padding: 30px;
+        }
+
+        /* DASHBOARD CONTENT */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white" fill-opacity="0.05"><path d="M0,0 L100,0 L100,100 Z"/></svg>') no-repeat;
+            background-size: cover;
+        }
+
+        .hero-content h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-bottom: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .stat-icon.hotel { background: linear-gradient(135deg, var(--primary), var(--accent)); }
+        .stat-icon.occupancy { background: linear-gradient(135deg, var(--success), #34d399); }
+        .stat-icon.booking { background: linear-gradient(135deg, var(--warning), #fbbf24); }
+        .stat-icon.revenue { background: linear-gradient(135deg, var(--danger), #f87171); }
+
+        .stat-trend {
+            font-size: 14px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .hotel-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .section-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+        }
+
+        .section-header i {
+            color: var(--primary);
+        }
+
+        .section-body {
+            padding: 25px;
+        }
+
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .hotel-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            background: white;
+            cursor: pointer;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hotel-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .hotel-card:hover .hotel-image {
+            transform: scale(1.05);
+        }
+
+        .hotel-info {
+            padding: 20px;
+        }
+
+        .hotel-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .hotel-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .hotel-meta i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--warning);
+        }
+
+        .hotel-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .status-available {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-limited {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .action-button {
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: var(--transition);
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .action-button:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        .action-button i {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .action-button span {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            font-size: 14px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .hotel-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-area {
+                padding: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-section {
+                padding: 30px 20px;
+            }
+            
+            .hero-content h2 {
+                font-size: 26px;
+            }
+            
+            .quick-actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hotel-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-navbar {
+                padding: 0 15px;
+            }
+            
+            .user-info {
+                display: none;
+            }
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <div class="sidebar-title">
+                    TRIP<span>KUY</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">MENU UTAMA</div>
+                    <a href="admin-dashboard.html" class="menu-item active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">MANAGEMENT HOTEL</div>
+                    <a href="admin-data-hotel.html" class="menu-item">
+                        <i class="fas fa-hotel"></i>
+                        <span>Data Hotel</span>
+                    </a>
+                    <a href="admin-management-kamar.html" class="menu-item">
+                        <i class="fas fa-bed"></i>
+                        <span>Management Kamar</span>
+                    </a>
+                    <a href="admin-harga-promo.html" class="menu-item">
+                        <i class="fas fa-tag"></i>
+                        <span>Harga & Promo</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">OPERASIONAL</div>
+                    <a href="admin-reservasi.html" class="menu-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Reservasi</span>
+                        <span class="menu-badge">42</span>
+                    </a>
+                    <a href="admin-checkin-out.html" class="menu-item">
+                        <i class="fas fa-key"></i>
+                        <span>Check-in/out</span>
+                        <span class="menu-badge">8</span>
+                    </a>
+                    <a href="admin-pelanggan.html" class="menu-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pelanggan</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1>Dashboard Admin</h1>
+                        <p id="pageDate"></p>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">AK</div>
+                        <div class="user-info">
+                            <h4>Admin Hotel</h4>
+                            <p>Super Administrator</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h2>TRIPKUY Hotel Management</h2>
+                        <p>Kelola semua properti hotel Anda dengan mudah dari satu dashboard terpusat.</p>
+                    </div>
+                </section>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="window.location.href='admin-data-hotel.html'">
+                        <div class="stat-header">
+                            <div class="stat-icon hotel">
+                                <i class="fas fa-hotel"></i>
+                            </div>
+                            <span class="stat-trend">+3</span>
+                        </div>
+                        <div class="stat-value">20</div>
+                        <div class="stat-label">Total Hotel</div>
+                    </div>
+                    
+                    <div class="stat-card" onclick="alert('Occupancy Rate: 78%')">
+                        <div class="stat-header">
+                            <div class="stat-icon occupancy">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <span class="stat-trend">+5.2%</span>
+                        </div>
+                        <div class="stat-value">78%</div>
+                        <div class="stat-label">Occupancy Rate</div>
+                    </div>
+                    
+                    <div class="stat-card" onclick="window.location.href='admin-reservasi.html'">
+                        <div class="stat-header">
+                            <div class="stat-icon booking">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <span class="stat-trend">+12</span>
+                        </div>
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">Booking Aktif</div>
+                    </div>
+                    
+                    <div class="stat-card" onclick="alert('Revenue Bulanan: Rp 254.3 Juta')">
+                        <div class="stat-header">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <span class="stat-trend">+18.5%</span>
+                        </div>
+                        <div class="stat-value">Rp 254.3JT</div>
+                        <div class="stat-label">Revenue Bulanan</div>
+                    </div>
+                </div>
+
+                <!-- Hotel Terpopuler & Quick Actions -->
+                <div class="hotel-section">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3><i class="fas fa-crown"></i> Hotel Terpopuler</h3>
+                        </div>
+                        <div class="section-body">
+                            <div class="hotel-grid" id="popularHotels">
+                                <!-- Hotels will be loaded by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3><i class="fas fa-bolt"></i> Aksi Cepat</h3>
+                        </div>
+                        <div class="section-body">
+                            <div class="quick-actions-grid">
+                                <button class="action-button" onclick="addHotel()">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Tambah Hotel</span>
+                                </button>
+                                <button class="action-button" onclick="window.location.href='admin-management-kamar.html'">
+                                    <i class="fas fa-bed"></i>
+                                    <span>Tambah Kamar</span>
+                                </button>
+                                <button class="action-button" onclick="window.location.href='admin-harga-promo.html'">
+                                    <i class="fas fa-tag"></i>
+                                    <span>Buat Promo</span>
+                                </button>
+                                <button class="action-button" onclick="openSettings()">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Data Hotel Dummy
+        const hotels = [
+            { id: 1, name: 'Hotel Indonesia Kempinski', city: 'Jakarta', rating: 4.8 },
+            { id: 2, name: 'The Gaia Hotel Bandung', city: 'Bandung', rating: 4.7 },
+            { id: 3, name: 'Hotel Tentrem Yogyakarta', city: 'Yogyakarta', rating: 4.6 }
+        ];
+
+        // Hotel images
+        const hotelImages = [
+            'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load popular hotels
+            loadPopularHotels();
+            
+            // Update date
+            updateDate();
+            
+            // Mobile menu toggle
+            document.getElementById('menuToggle').addEventListener('click', function() {
+                document.querySelector('.sidebar').classList.toggle('active');
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                const sidebar = document.querySelector('.sidebar');
+                const menuToggle = document.getElementById('menuToggle');
+                
+                if (window.innerWidth <= 992 && 
+                    !sidebar.contains(event.target) && 
+                    !menuToggle.contains(event.target) &&
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+
+        // Load popular hotels
+        function loadPopularHotels() {
+            const container = document.getElementById('popularHotels');
+            container.innerHTML = '';
+            
+            hotels.forEach((hotel, index) => {
+                const availableRooms = Math.floor(Math.random() * 20) + 5;
+                const statusClass = availableRooms > 10 ? 'status-available' : 'status-limited';
+                const statusText = availableRooms > 10 ? `${availableRooms} Kamar Tersedia` : `Hanya ${availableRooms} Kamar`;
+                
+                const hotelCard = document.createElement('div');
+                hotelCard.className = 'hotel-card';
+                hotelCard.onclick = () => window.location.href = 'admin-data-hotel.html';
+                
+                hotelCard.innerHTML = `
+                    <img src="${hotelImages[index % hotelImages.length]}" alt="${hotel.name}" class="hotel-image">
+                    <div class="hotel-info">
+                        <h3 class="hotel-name">${hotel.name}</h3>
+                        <div class="hotel-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> ${hotel.city}</span>
+                            <div class="hotel-rating">
+                                <i class="fas fa-star"></i>
+                                <span>${hotel.rating}</span>
+                            </div>
+                        </div>
+                        <span class="hotel-status ${statusClass}">${statusText}</span>
+                    </div>
+                `;
+                
+                container.appendChild(hotelCard);
+            });
+        }
+
+        // Update date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateString = now.toLocaleDateString('id-ID', options);
+            
+            document.getElementById('pageDate').textContent = 
+                `Selamat datang kembali, Admin TRIPKUY! • ${dateString}`;
+        }
+
+        // Action functions
+        function addHotel() {
+            alert('Fitur Tambah Hotel akan diintegrasikan dengan backend');
+        }
+
+        function openSettings() {
+            alert('Pengaturan Sistem akan diintegrasikan dengan backend');
+        }
+
+        // Update date every minute
+        setInterval(updateDate, 60000);
+    </script>
+</body>
+</html>
