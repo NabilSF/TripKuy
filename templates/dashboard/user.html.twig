@@ -1,20 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="flex min-h-screen bg-gray-50">
+    <aside class="w-64 bg-white border-r border-gray-100 hidden md:block">
+        <div class="p-8">
+            <a href="/home" class="text-2xl font-bold">
+                Trip<span class="text-[var(--color-primary)]">Kuy</span>
+            </a>
+        </div>
+        <nav class="mt-4 px-4 space-y-2">
+            <a href="#" class="flex items-center gap-3 p-4 bg-[#2aa090]/10 text-[#2aa090] rounded-2xl font-bold">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 p-4 text-gray-500 hover:bg-gray-50 rounded-2xl transition-all">
+                <i class="fas fa-book"></i> Pesanan Saya
+            </a>
+        </nav>
+    </aside>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/rin/tripkuy/src/Controller/DashboardController.php</code></li>
-        <li>Your template at <code>/home/rin/tripkuy/templates/dashboard/index.html.twig</code></li>
-    </ul>
+    <main class="flex-1 p-8">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900">Halo, {{ user.nama }}!</h2>
+                <p class="text-gray-500">Selamat datang kembali di panel kontrol Anda.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="text-sm font-bold text-gray-900">{{ user.nama }}</p>
+                    <p class="text-xs text-gray-400">{{ user.email }}</p>
+                </div>
+                <div class="w-12 h-12 bg-[#2aa090] rounded-full flex items-center justify-center text-white font-bold">
+                    {{ user.nama|first|upper }}
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
+                <p class="text-gray-400 text-xs font-bold uppercase mb-2">Total Pesanan</p>
+                <h3 class="text-3xl font-black text-gray-900">{{ user.reservasis|length }}</h3>
+            </div>
+            <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
+                <p class="text-gray-400 text-xs font-bold uppercase mb-2">No. Telepon</p>
+                <h3 class="text-xl font-bold text-gray-900">{{ user.NoTelepon ?: '-' }}</h3>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-8 border-b border-gray-50">
+                <h3 class="font-bold text-gray-900">Pesanan Terbaru</h3>
+            </div>
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                    <tr>
+                        <th class="px-8 py-4">Hotel & Kamar</th>
+                        <th class="px-8 py-4">Check In/Out</th>
+                        <th class="px-8 py-4">Status</th>
+                        <th class="px-8 py-4">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    {% for reservasi in user.reservasis %}
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-8 py-6">
+                            <p class="font-bold text-gray-900">{{ reservasi.kamar.hotel.namaHotel }}</p>
+                            <p class="text-xs text-gray-500">{{ reservasi.kamar.namaKamar }}</p>
+                        </td>
+                        <td class="px-8 py-6 text-sm text-gray-600">
+                            {{ reservasi.tglCheckIn|date('d/m/y') }} - {{ reservasi.tglCheckOut|date('d/m/y') }}
+                        </td>
+                        <td class="px-8 py-6">
+                            {% if reservasi.pembatalan is not null %}
+                                <span class="px-3 py-1 bg-red-50 text-red-600 rounded-lg text-[10px] font-bold uppercase">Dibatalkan</span>
+                            {% elseif reservasi.pembayaran is not null %}
+                                <span class="px-3 py-1 bg-green-50 text-green-600 rounded-lg text-[10px] font-bold uppercase">Terbayar</span>
+                            {% else %}
+                                <span class="px-3 py-1 bg-amber-50 text-amber-600 rounded-lg text-[10px] font-bold uppercase">Menunggu</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-8 py-6 font-bold text-gray-900">
+                            {{ reservasi.pembayaran ? 'Rp ' ~ reservasi.pembayaran.totalHarga|number_format(0,',','.') : '-' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
 </div>
 {% endblock %}
