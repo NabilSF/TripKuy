@@ -38,7 +38,7 @@
         <form class="flex flex-col md:flex-row items-center gap-2">
             <div class="flex-1 w-full px-5 py-2 hover:bg-gray-50 rounded-full transition-colors">
                 <label class="block text-[10px] uppercase tracking-wider text-text-light font-bold">Lokasi</label>
-                <input type="text" placeholder="Ke mana?" class="w-full bg-transparent outline-none text-sm font-semibold placeholder:font-normal">
+                <input name="alamat" type="text" placeholder="Ke mana?" class="w-full bg-transparent outline-none text-sm font-semibold placeholder:font-normal">
             </div>
             <div class="hidden md:block w-px h-8 bg-gray-200"></div>
             <div class="flex-1 w-full px-5 py-2 hover:bg-gray-50 rounded-full transition-colors">
@@ -61,6 +61,14 @@
 </section>
 
 <div class="max-w-[1400px] mx-auto px-10 mb-8">
+    {% if alamat is not null %}
+    <div class="flex items-center gap-4 mb-4">
+        <p class="text-lg">Mencari Hasil untuk "{{ alamat }}"</p>
+        <a class="filter-tab active flex items-center justify-center h-12 w-12 rounded-full text-sm font-semibold border border-text-dark transition-all whitespace-nowrap bg-white text-text-dark" href="./">
+            <i class="fa-solid fa-x"></i>
+        </a>
+    </div>
+    {% endif %}
     <div class="flex gap-4 border-b border-gray-200 pb-4 overflow-x-auto hide-scrollbar">
         <button class="filter-tab active flex items-center gap-2 px-6 py-3 rounded-full bg-text-dark text-white text-sm font-semibold border border-text-dark transition-all whitespace-nowrap">
             <i class="fas fa-hotel"></i> Semua

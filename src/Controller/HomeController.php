@@ -26,6 +26,7 @@ final class HomeController extends AbstractController
         return $this->render("hotel/index.html.twig", [
             "controller_name" => "HomeController",
             "hotels" => $hotels,
+            "alamat" => $alamat,
         ]);
     }
 }
