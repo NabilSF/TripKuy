@@ -1,55 +1,77 @@
-<!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <i class="fas fa-hotel"></i>
-                </div>
-                <div class="sidebar-title">
-                    TRIP<span>KUY</span>
+<div class="flex min-h-screen bg-[#f8fafc]">
+    <aside class="w-64 bg-[#1f2937] border-r border-gray-800 h-screen sticky top-0 flex-shrink-0 flex flex-col overflow-y-auto transition-all">
+        
+        <div class="p-6 border-b border-gray-800 flex items-center gap-4">
+            <div class="w-10 h-10 bg-[#2aa090] rounded-xl flex items-center justify-center text-white shadow-lg">
+                <i class="fas fa-hotel text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-white text-xl font-black leading-none">TRIP<span class="text-[#2aa090]">KUY</span></h1>
+                <p class="text-[10px] text-gray-500 font-bold tracking-widest mt-1">ADMIN PANEL</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-8">
+            
+            <div>
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4 px-2">Menu Utama</p>
+                <div class="space-y-1">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 bg-[#2aa090] text-white rounded-xl font-semibold shadow-md transition-all">
+                        <i class="fas fa-tachometer-alt w-5 text-center"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </div>
             </div>
-            
-            <nav class="sidebar-menu">
-                <div class="menu-section">
-                    <div class="menu-section-title">MENU UTAMA</div>
-                    <div class="menu-item active" data-page="dashboard">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
-                    </div>
-                </div>
-                
-                <div class="menu-section">
-                    <div class="menu-section-title">MANAGEMENT HOTEL</div>
-                    <div class="menu-item" data-page="data-hotel">
-                        <i class="fas fa-hotel"></i>
+
+            <div>
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4 px-2">Management Hotel</p>
+                <div class="space-y-1">
+                    <a href="#" class="group flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all font-medium">
+                        <i class="fas fa-hotel w-5 text-center group-hover:text-[#2aa090]"></i>
                         <span>Data Hotel</span>
-                    </div>
-                    <div class="menu-item" data-page="management-kamar">
-                        <i class="fas fa-bed"></i>
+                    </a>
+                    <a href="#" class="group flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all font-medium">
+                        <i class="fas fa-bed w-5 text-center group-hover:text-[#2aa090]"></i>
                         <span>Management Kamar</span>
-                    </div>
-                    <div class="menu-item" data-page="harga-promo">
-                        <i class="fas fa-tag"></i>
+                    </a>
+                    <a href="#" class="group flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all font-medium">
+                        <i class="fas fa-tag w-5 text-center group-hover:text-[#2aa090]"></i>
                         <span>Harga & Promo</span>
-                    </div>
+                    </a>
                 </div>
-                
-                <div class="menu-section">
-                    <div class="menu-section-title">OPERASIONAL</div>
-                    <div class="menu-item" data-page="reservasi">
-                        <i class="fas fa-calendar-check"></i>
-                        <span>Reservasi</span>
-                        <span class="menu-badge">42</span>
-                    </div>
-                    <div class="menu-item" data-page="checkin-out">
-                        <i class="fas fa-key"></i>
-                        <span>Check-in/out</span>
-                        <span class="menu-badge">8</span>
-                    </div>
-                    <div class="menu-item" data-page="pelanggan">
-                        <i class="fas fa-users"></i>
+            </div>
+
+            <div>
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4 px-2">Operasional</p>
+                <div class="space-y-1">
+                    <a href="#" class="group flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all font-medium">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-calendar-check w-5 text-center group-hover:text-[#2aa090]"></i>
+                            <span>Reservasi</span>
+                        </div>
+                        <span class="bg-[#2aa090] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">42</span>
+                    </a>
+                    <a href="#" class="group flex items-center justify-between px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all font-medium">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-key w-5 text-center group-hover:text-[#2aa090]"></i>
+                            <span>Check-in/out</span>
+                        </div>
+                        <span class="bg-[#2aa090] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">8</span>
+                    </a>
+                    <a href="#" class="group flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all font-medium">
+                        <i class="fas fa-users w-5 text-center group-hover:text-[#2aa090]"></i>
                         <span>Pelanggan</span>
-                    </div>
+                    </a>
                 </div>
-            </nav>
-        </aside>
+            </div>
+
+        </nav>
+
+        <div class="p-4 border-t border-gray-800">
+            <button class="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-xl font-medium transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Keluar</span>
+            </button>
+        </div>
+    </aside>
+</div>
