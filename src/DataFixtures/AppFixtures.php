@@ -6,13 +6,48 @@ use App\Entity\GambarHotel;
 use App\Entity\GambarKamar;
 use App\Entity\Hotel;
 use App\Entity\TipeKamar;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
+        /**
+         * =========================
+         * BUAT OWNER
+         * =========================
+         */
+        $owners = [];
+
+        for ($i = 1; $i <= 5; $i++) {
+            $owner = new User();
+            $owner->setEmail("owner{$i}@hotel.test");
+            $owner->setNama("owner-{$i}");
+            $owner->setNoTelepon(rand(10000000, 99999999));
+            $owner->setRoles(["ROLE_OWNER"]);
+            $owner->setPassword(
+                $this->passwordHasher->hashPassword($owner, "password"),
+            );
+
+            $manager->persist($owner);
+            $owners[] = $owner;
+        }
+
+        /**
+         * =========================
+         * DATA HOTEL
+         * =========================
+         */
         $hotels = [
             [
                 "nama" => "Grand Hyatt",
@@ -26,79 +61,55 @@ class AppFixtures extends Fixture
                 "lokasi" => "Bali",
                 "email" => "rc.balisz.reserves@ritzcarlton.com",
                 "deskripsi" =>
-                    "Resor tepi pantai yang memadukan keanggunan modern dengan tradisi spiritual Bali, terletak di atas tebing Sawangan dengan pemandangan Samudra Hindia yang tak bertepi.",
+                    "Resor tepi pantai yang memadukan keanggunan modern dengan tradisi spiritual Bali.",
             ],
             [
                 "nama" => "Padma Resort",
                 "lokasi" => "Bandung",
                 "email" => "reservation@padmaresort.com",
                 "deskripsi" =>
-                    "Terletak di lembah hijau Ciumbuleuit yang spektakuler, tempat ini adalah pelarian sempurna untuk menikmati udara pegunungan yang segar dan kolam renang air hangat ikonik.",
+                    "Pelarian sempurna dengan udara pegunungan dan kolam renang ikonik.",
             ],
             [
                 "nama" => "Hotel Indonesia Kempinski",
                 "lokasi" => "Jakarta",
                 "email" => "info.jakarta@kempinski.com",
                 "deskripsi" =>
-                    "Hotel bersejarah pertama di Indonesia yang menggabungkan warisan budaya nusantara dengan standar kemewahan Eropa yang tak tertandingi.",
+                    "Hotel bersejarah dengan standar kemewahan Eropa.",
             ],
             [
                 "nama" => "Amanjiwo",
                 "lokasi" => "Magelang",
                 "email" => "amanjiwo@aman.com",
                 "deskripsi" =>
-                    "Sebuah mahakarya arsitektur yang terinspirasi dari stupa Candi Borobudur, menawarkan ketenangan spiritual di tengah amfiteater alami perbukitan Menoreh.",
-            ],
-            [
-                "nama" => "Plataran Borobudur",
-                "lokasi" => "Magelang",
-                "email" => "borobudur@plataran.com",
-                "deskripsi" =>
-                    "Menghadirkan suasana pedesaan Jawa yang autentik dengan sentuhan kolonial, memberikan pengalaman menginap yang intim tepat di depan keajaiban dunia.",
-            ],
-            [
-                "nama" => "Alila Villas Uluwatu",
-                "lokasi" => "Bali",
-                "email" => "uluwatu@alilahotels.com",
-                "deskripsi" =>
-                    "Pelopor desain berkelanjutan yang dramatis di tepi tebing kapur, menawarkan privasi total dalam vila modern yang seolah melayang di atas laut.",
-            ],
-            [
-                "nama" => "Hotel Tentrem",
-                "lokasi" => "Yogyakarta",
-                "email" => "info@hoteltentrem.com",
-                "deskripsi" =>
-                    "Mengusung filosofi ketenangan jiwa, hotel ini mendefinisikan ulang keramahtamahan Jawa modern dengan fasilitas bintang lima yang megah.",
-            ],
-            [
-                "nama" => "Pullman Vimala Hills",
-                "lokasi" => "Bogor",
-                "email" => "reservation@pullman-vimalahills.com",
-                "deskripsi" =>
-                    "Resor ramah keluarga dengan konsep kebun raya yang rimbun, menawarkan pemandangan Gunung Salak yang menenangkan di pagi hari.",
-            ],
-            [
-                "nama" => "The Gaia Hotel",
-                "lokasi" => "Bandung",
-                "email" => "hello@thegaiahotel.com",
-                "deskripsi" =>
-                    "Destinasi gaya hidup aktif yang unik dengan perpustakaan raksasa yang artistik, dirancang untuk memberikan keseimbangan antara eksplorasi dan istirahat.",
+                    "Resor eksklusif dengan ketenangan spiritual Borobudur.",
             ],
         ];
 
         foreach ($hotels as $index => $data) {
             $hotel = new Hotel();
-            $hotel->setNamaHotel($data["nama"]); //
-            $hotel->setAlamat($data["lokasi"]); //
-            $hotel->setEmail($data["email"]); //
-            $hotel->setKontak("021-" . rand(111, 999) . rand(1000, 9999)); //
-            $hotel->setDeskripsi($data["deskripsi"]); //
+            $hotel->setNamaHotel($data["nama"]);
+            $hotel->setAlamat($data["lokasi"]);
+            $hotel->setEmail($data["email"]);
+            $hotel->setKontak("021-" . rand(111, 999) . rand(1000, 9999));
+            $hotel->setDeskripsi($data["deskripsi"]);
 
+            /**
+             * SET OWNER (acak)
+             */
+            $hotel->setOwner($owners[array_rand($owners)]);
+
+            /**
+             * GAMBAR HOTEL
+             */
             $hImage = new GambarHotel();
             $hImage->setFileName("hotel_" . ($index + 1) . ".jpg");
             $hImage->setHotel($hotel);
             $manager->persist($hImage);
 
+            /**
+             * TIPE KAMAR
+             */
             $roomTypes = [
                 [
                     "name" => "Superior Room",
@@ -119,26 +130,20 @@ class AppFixtures extends Fixture
 
             foreach ($roomTypes as $roomData) {
                 $tipe = new TipeKamar();
-                $tipe->setNamaKamar($roomData["name"]); //
+                $tipe->setNamaKamar($roomData["name"]);
                 $tipe->setDeskripsi(
                     "Fasilitas premium dengan kenyamanan maksimal.",
-                ); //
-                $tipe->setKapasitasOrang(2); //
-                $tipe->setTotalKamar(rand(5, 15)); //
+                );
+                $tipe->setKapasitasOrang(2);
+                $tipe->setTotalKamar(rand(5, 15));
+                $tipe->setHarga($roomData["base"] + rand(0, 10) * 50000);
+                $tipe->setHotel($hotel);
 
-                // LOGIKA HARGA BULAT:
-                // Mengambil harga dasar dan menambahkan variasi kelipatan 50.000
-                $hargaBulat = $roomData["base"] + rand(0, 10) * 50000;
-                $tipe->setHarga($hargaBulat); //
-
-                $tipe->setHotel($hotel); //
-
-                // Tambahkan Gambar Kamar
                 $tkImage = new GambarKamar();
                 $tkImage->setFileName($roomData["filename"]);
                 $tkImage->setTipeKamar($tipe);
-                $manager->persist($tkImage);
 
+                $manager->persist($tkImage);
                 $manager->persist($tipe);
             }
 

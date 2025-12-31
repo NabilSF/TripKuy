@@ -42,6 +42,9 @@ class Hotel
     #[ORM\OneToMany(targetEntity: GambarHotel::class, mappedBy: 'hotel')]
     private Collection $gambarHotels;
 
+    #[ORM\ManyToOne(inversedBy: 'hotels')]
+    private ?User $owner = null;
+
     public function __construct()
     {
         $this->tipeKamars = new ArrayCollection();
@@ -169,6 +172,18 @@ class Hotel
                 $gambarHotel->setHotel(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }

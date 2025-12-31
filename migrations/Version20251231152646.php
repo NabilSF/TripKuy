@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20251231105858 extends AbstractMigration
+final class Version20251231152646 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,7 +22,7 @@ final class Version20251231105858 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE gambar_hotel (id INT AUTO_INCREMENT NOT NULL, file_name VARCHAR(255) NOT NULL, hotel_id INT NOT NULL, INDEX IDX_BFD65E333243BB18 (hotel_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE gambar_kamar (id INT AUTO_INCREMENT NOT NULL, file_name VARCHAR(255) NOT NULL, tipe_kamar_id INT NOT NULL, INDEX IDX_953D33484C8BD899 (tipe_kamar_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
-        $this->addSql('CREATE TABLE hotel (id INT AUTO_INCREMENT NOT NULL, nama_hotel VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, alamat VARCHAR(255) NOT NULL, kontak VARCHAR(255) NOT NULL, deskripsi VARCHAR(255) NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('CREATE TABLE hotel (id INT AUTO_INCREMENT NOT NULL, nama_hotel VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, alamat VARCHAR(255) NOT NULL, kontak VARCHAR(255) NOT NULL, deskripsi VARCHAR(255) NOT NULL, owner_id INT DEFAULT NULL, INDEX IDX_3535ED97E3C61F9 (owner_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE pembatalan (id INT AUTO_INCREMENT NOT NULL, alasan VARCHAR(255) NOT NULL, tanggal_pengajuan DATE NOT NULL, catatan_admin VARCHAR(255) NOT NULL, tanggal_refund DATE NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE pembayaran (id INT AUTO_INCREMENT NOT NULL, total_harga INT NOT NULL, tipe_pembayaran VARCHAR(255) NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE reservasi (id INT AUTO_INCREMENT NOT NULL, tanggal_reservasi DATE NOT NULL, tanggal_check_in DATE NOT NULL, tanggal_check_out DATE NOT NULL, jumlah_kamar INT NOT NULL, total_malam INT NOT NULL, user_id INT NOT NULL, kamar_id INT NOT NULL, pembayaran_id INT DEFAULT NULL, pembatalan_id INT DEFAULT NULL, INDEX IDX_91C11B4CA76ED395 (user_id), INDEX IDX_91C11B4C8D6C1299 (kamar_id), INDEX IDX_91C11B4C3EA41844 (pembayaran_id), INDEX IDX_91C11B4C9C7D6E7E (pembatalan_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
@@ -31,6 +31,7 @@ final class Version20251231105858 extends AbstractMigration
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, nama VARCHAR(64) NOT NULL, no_telepon VARCHAR(16) NOT NULL, UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('ALTER TABLE gambar_hotel ADD CONSTRAINT FK_BFD65E333243BB18 FOREIGN KEY (hotel_id) REFERENCES hotel (id)');
         $this->addSql('ALTER TABLE gambar_kamar ADD CONSTRAINT FK_953D33484C8BD899 FOREIGN KEY (tipe_kamar_id) REFERENCES tipe_kamar (id)');
+        $this->addSql('ALTER TABLE hotel ADD CONSTRAINT FK_3535ED97E3C61F9 FOREIGN KEY (owner_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE reservasi ADD CONSTRAINT FK_91C11B4CA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE reservasi ADD CONSTRAINT FK_91C11B4C8D6C1299 FOREIGN KEY (kamar_id) REFERENCES tipe_kamar (id)');
         $this->addSql('ALTER TABLE reservasi ADD CONSTRAINT FK_91C11B4C3EA41844 FOREIGN KEY (pembayaran_id) REFERENCES pembayaran (id)');
@@ -44,6 +45,7 @@ final class Version20251231105858 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE gambar_hotel DROP FOREIGN KEY FK_BFD65E333243BB18');
         $this->addSql('ALTER TABLE gambar_kamar DROP FOREIGN KEY FK_953D33484C8BD899');
+        $this->addSql('ALTER TABLE hotel DROP FOREIGN KEY FK_3535ED97E3C61F9');
         $this->addSql('ALTER TABLE reservasi DROP FOREIGN KEY FK_91C11B4CA76ED395');
         $this->addSql('ALTER TABLE reservasi DROP FOREIGN KEY FK_91C11B4C8D6C1299');
         $this->addSql('ALTER TABLE reservasi DROP FOREIGN KEY FK_91C11B4C3EA41844');
