@@ -8,6 +8,10 @@ Dirancang untuk penggunaan sehari-hari, TripKuy memudahkan siapa pun memilih hot
 
 1. Apache HTTP Server (XAMPP, Laragon, etc.)
 2. MySQL
-3. PHP 8 (atau lebih tinggi)
+3. PHP 8.4 (atau lebih tinggi)
 
 menggunakan framework Symfony dengan component security, twig dan Doctrine ORM
+
+Login (email dan password):
+- admin@admin : 123 (ADMIN)
+- kira.yamato@gmail.com : kira (USER)
