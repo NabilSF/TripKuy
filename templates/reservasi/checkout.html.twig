@@ -4,8 +4,8 @@
 {% block body %}
 <main class="max-w-5xl mx-auto px-4 pt-32 pb-20">
     <form action="{{ path('reservasi_confirm', {'id': hotel.id}) }}" method="POST">
+        <a href="../.." class="text-2xl font-bold block mb-8">&lt; Kembali</a>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
             <div class="lg:col-span-2 space-y-6">
                 <div class="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm">
                     <h2 class="text-2xl font-black mb-6">Pilih Metode Pembayaran</h2>
