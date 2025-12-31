@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil - {{ user.nama }}{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8 sticky top-28 overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-[#2aa090]"></div>
+
+                <div class="text-center mb-8">
+                    <div class="w-24 h-24 bg-[#2aa090]/10 rounded-full mx-auto mb-4 flex items-center justify-center text-[#2aa090] text-3xl font-bold">
+                        {{ user.nama|first|upper }}
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900">{{ user.nama }}</h2>
+                    <p class="text-gray-500 text-sm">{{ user.email }}</p>
+                </div>
+
+                <div class="space-y-4 border-t border-gray-50 pt-6">
+                    <div>
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Nomor Telepon</p>
+                        <p class="text-sm font-semibold text-gray-700">{{ user.NoTelepon ?: '-' }}</p>
+                    </div>
+                </div>
+
+                <button class="mt-8 w-full py-3 bg-gray-900 hover:bg-black text-white rounded-xl font-bold transition-all shadow-lg active:scale-95">
+                    Pengaturan Akun
+                </button>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8">Riwayat Pemesanan</h3>
+
+                <div class="space-y-6">
+                    {% for reservasi in user.reservasis %}
+                        <div class="border border-gray-100 rounded-3xl p-6 hover:shadow-lg transition-shadow">
+                            <div class="flex flex-col md:flex-row justify-between gap-6">
+                                <div class="flex-1">
+                                    <div class="mb-3">
+                                        {% if reservasi.pembatalan is not null %}
+                                            <span class="px-3 py-1 bg-red-50 text-red-600 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                                                <i class="fas fa-ban mr-1"></i> Dibatalkan
+                                            </span>
+                                        {% elseif reservasi.pembayaran is not null %}
+                                            <span class="px-3 py-1 bg-green-50 text-green-600 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                                                <i class="fas fa-check-circle mr-1"></i> Terbayar
+                                            </span>
+                                        {% else %}
+                                            <span class="px-3 py-1 bg-amber-50 text-amber-600 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                                                <i class="fas fa-hourglass-half mr-1"></i> Menunggu Pembayaran
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                    <h4 class="text-lg font-bold text-gray-900">{{ reservasi.kamar.hotel.namaHotel }}</h4>
+                                    <p class="text-sm text-gray-500 mb-4">{{ reservasi.kamar.namaKamar }}</p>
+
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-gray-50 p-3 rounded-2xl">
+                                            <p class="text-[9px] font-bold text-gray-400 uppercase">Check-in</p>
+                                            <p class="text-xs font-bold text-gray-700">{{ reservasi.tanggalCheckIn|date('d M Y') }}</p>
+                                        </div>
+                                        <div class="bg-gray-50 p-3 rounded-2xl">
+                                            <p class="text-[9px] font-bold text-gray-400 uppercase">Check-out</p>
+                                            <p class="text-xs font-bold text-gray-700">{{ reservasi.tanggalCheckOut|date('d M Y') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="md:text-right flex flex-col justify-end">
+                                    {% if reservasi.pembayaran is not null %}
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase mb-1">Total Pembayaran</p>
+                                        <p class="text-xl font-black text-[#2aa090]">
+                                            Rp {{ reservasi.pembayaran.totalHarga|number_format(0, ',', '.') }}
+                                        </p>
+                                    {% endif %}
+
+                                    {% if reservasi.pembayaran is null and reservasi.pembatalan is null %}
+                                        <a href="#" class="mt-4 px-6 py-2 bg-[#2aa090] text-white text-sm font-bold rounded-lg hover:bg-black transition-colors inline-block">
+                                            Lanjutkan Pembayaran
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-16">
+                            <p class="text-gray-400 italic text-sm">Anda belum memiliki riwayat reservasi.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include 'footer.html.twig' %}
+{% endblock %}

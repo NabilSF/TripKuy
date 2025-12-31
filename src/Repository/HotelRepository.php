@@ -37,4 +37,18 @@ class HotelRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findByAlamat(?string $alamat): array
+    {
+        $qb = $this->createQueryBuilder("h");
+
+        if ($alamat) {
+            $qb->andWhere("h.alamat LIKE :alamat")->setParameter(
+                "alamat",
+                "%" . $alamat . "%",
+            );
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }
