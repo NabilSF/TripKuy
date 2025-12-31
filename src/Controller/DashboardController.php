@@ -12,22 +12,34 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class DashboardController extends AbstractController
 {
+    /**
+     * Route utama /dashboard sebagai pintu masuk.
+     * User akan diarahkan sesuai Role mereka.
+     */
     #[Route("/dashboard", name: "app_dashboard")]
+    #[IsGranted("ROLE_USER")]
     public function index(): Response
     {
         $user = $this->getUser();
 
+        // Jika user adalah ADMIN, arahkan ke dashboard admin
         if ($this->isGranted("ROLE_ADMIN")) {
             return $this->redirectToRoute("admin_dashboard");
         }
 
+        // Jika user biasa, render halaman user
         return $this->render("dashboard/user.html.twig", [
             "controller_name" => "DashboardController",
             "user" => $user,
         ]);
     }
 
+    /**
+     * Dashboard khusus Admin.
+     * Hanya bisa diakses oleh user dengan ROLE_ADMIN.
+     */
     #[Route("/admin/dashboard", name: "admin_dashboard")]
+    #[IsGranted("ROLE_ADMIN")]
     public function admin_dashboard(
         TipeKamarRepository $tipeKamarRepo,
         PembatalanRepository $pembatalanRepo,
@@ -44,13 +56,12 @@ final class DashboardController extends AbstractController
         ]);
     }
 
-    #[
-        Route(
-            "/admin/pembatalan/{id}/approve",
-            name: "admin_pembatalan_approve",
-            methods: ["POST"],
-        ),
-    ]
+    /**
+     * Aksi Approval Pembatalan.
+     * Dikunci ketat dengan ROLE_ADMIN dan Method POST.
+     */
+    #[Route("/admin/pembatalan/{id}/approve", name: "admin_pembatalan_approve", methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function approveCancellation(
         $id,
         PembatalanRepository $pembatalanRepo,

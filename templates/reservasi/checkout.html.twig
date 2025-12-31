@@ -1,0 +1,78 @@
+{# templates/reservasi/checkout.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main class="max-w-5xl mx-auto px-4 pt-32 pb-20">
+    <form action="{{ path('reservasi_confirm', {'id': hotel.id}) }}" method="POST">
+        <a href="../.." class="text-2xl font-bold block mb-8">&lt; Kembali</a>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm">
+                    <h2 class="text-2xl font-black mb-6">Pilih Metode Pembayaran</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label class="relative flex items-center p-5 border-2 rounded-2xl cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#2aa090] has-[:checked]:bg-[#2aa090]/5 transition-all">
+                            <input type="radio" name="metode_pembayaran" value="Transfer Bank" class="w-5 h-5 accent-[#2aa090]" required>
+                            <div class="ml-4">
+                                <p class="font-bold">Transfer Bank Manual</p>
+                                <p class="text-xs text-gray-500">BCA, Mandiri, BNI</p>
+                            </div>
+                        </label>
+                        <label class="relative flex items-center p-5 border-2 rounded-2xl cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#2aa090] has-[:checked]:bg-[#2aa090]/5 transition-all">
+                            <input type="radio" name="metode_pembayaran" value="E-Wallet" class="w-5 h-5 accent-[#2aa090]">
+                            <div class="ml-4">
+                                <p class="font-bold">E-Wallet</p>
+                                <p class="text-xs text-gray-500">Gopay, OVO, Dana</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-2xl">
+                    <div class="flex">
+                        <i class="fas fa-info-circle text-blue-500 mt-1 mr-3"></i>
+                        <p class="text-sm text-blue-700">
+                            Pesanan Anda akan disimpan sebagai <strong>"Menunggu Pembayaran"</strong>. Anda memiliki waktu 24 jam untuk melunasi tagihan sebelum otomatis dibatalkan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-gray-900 rounded-[2.5rem] p-8 text-white sticky top-32">
+                    <h3 class="text-lg font-bold mb-4">Ringkasan Biaya</h3>
+
+                    <div class="space-y-3 text-sm border-b border-gray-800 pb-6 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ room.namaKamar }}</span>
+                            <span>{{ jumlahKamar }} Unit</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Durasi</span>
+                            <span>{{ nights }} Malam</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-end mb-8">
+                        <div>
+                            <p class="text-[10px] font-black text-gray-500 uppercase">Total Tagihan</p>
+                            <p class="text-2xl font-black text-[#2aa090]">Rp {{ totalHarga|number_format(0, ',', '.') }}</p>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="room_id" value="{{ room.id }}">
+                    <input type="hidden" name="checkin" value="{{ checkin }}">
+                    <input type="hidden" name="checkout" value="{{ checkout }}">
+                    <input type="hidden" name="jumlah_kamar" value="{{ jumlahKamar }}">
+                    <input type="hidden" name="nights" value="{{ nights }}">
+                    <input type="hidden" name="total_harga" value="{{ totalHarga }}">
+
+                    <button type="submit" class="w-full py-4 bg-[#2aa090] hover:bg-white hover:text-black text-white font-black rounded-2xl transition-all">
+                        KONFIRMASI PESANAN
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}
