@@ -40,9 +40,16 @@ class TipeKamar
     #[ORM\OneToMany(targetEntity: Reservasi::class, mappedBy: 'kamar')]
     private Collection $reservasis;
 
+    /**
+     * @var Collection<int, GambarKamar>
+     */
+    #[ORM\OneToMany(targetEntity: GambarKamar::class, mappedBy: 'TipeKamar')]
+    private Collection $gambarKamars;
+
     public function __construct()
     {
         $this->reservasis = new ArrayCollection();
+        $this->gambarKamars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +153,36 @@ class TipeKamar
             // set the owning side to null (unless already changed)
             if ($reservasi->getKamar() === $this) {
                 $reservasi->setKamar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GambarKamar>
+     */
+    public function getGambarKamars(): Collection
+    {
+        return $this->gambarKamars;
+    }
+
+    public function addGambarKamar(GambarKamar $gambarKamar): static
+    {
+        if (!$this->gambarKamars->contains($gambarKamar)) {
+            $this->gambarKamars->add($gambarKamar);
+            $gambarKamar->setTipeKamar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGambarKamar(GambarKamar $gambarKamar): static
+    {
+        if ($this->gambarKamars->removeElement($gambarKamar)) {
+            // set the owning side to null (unless already changed)
+            if ($gambarKamar->getTipeKamar() === $this) {
+                $gambarKamar->setTipeKamar(null);
             }
         }
 

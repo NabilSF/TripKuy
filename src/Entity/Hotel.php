@@ -36,9 +36,16 @@ class Hotel
     #[ORM\OneToMany(targetEntity: TipeKamar::class, mappedBy: 'hotel')]
     private Collection $tipeKamars;
 
+    /**
+     * @var Collection<int, GambarHotel>
+     */
+    #[ORM\OneToMany(targetEntity: GambarHotel::class, mappedBy: 'hotel')]
+    private Collection $gambarHotels;
+
     public function __construct()
     {
         $this->tipeKamars = new ArrayCollection();
+        $this->gambarHotels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +137,36 @@ class Hotel
             // set the owning side to null (unless already changed)
             if ($tipeKamar->getHotel() === $this) {
                 $tipeKamar->setHotel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GambarHotel>
+     */
+    public function getGambarHotels(): Collection
+    {
+        return $this->gambarHotels;
+    }
+
+    public function addGambarHotel(GambarHotel $gambarHotel): static
+    {
+        if (!$this->gambarHotels->contains($gambarHotel)) {
+            $this->gambarHotels->add($gambarHotel);
+            $gambarHotel->setHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGambarHotel(GambarHotel $gambarHotel): static
+    {
+        if ($this->gambarHotels->removeElement($gambarHotel)) {
+            // set the owning side to null (unless already changed)
+            if ($gambarHotel->getHotel() === $this) {
+                $gambarHotel->setHotel(null);
             }
         }
 
