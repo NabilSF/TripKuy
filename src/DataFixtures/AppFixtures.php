@@ -94,13 +94,10 @@ class AppFixtures extends Fixture
             $hotel->setKontak("021-" . rand(111, 999) . rand(1000, 9999)); //
             $hotel->setDeskripsi($data["deskripsi"]); //
 
-            // Tambahkan Gambar Hotel (2 per hotel)
-            for ($j = 1; $j <= 2; $j++) {
-                $hImage = new GambarHotel();
-                $hImage->setFileName("hotel_" . ($index + 1) . "_$j.jpg");
-                $hImage->setHotel($hotel);
-                $manager->persist($hImage);
-            }
+            $hImage = new GambarHotel();
+            $hImage->setFileName("hotel_" . ($index + 1) . ".jpg");
+            $hImage->setHotel($hotel);
+            $manager->persist($hImage);
 
             $roomTypes = [
                 [
