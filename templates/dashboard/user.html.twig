@@ -68,7 +68,7 @@
                             <p class="text-xs text-gray-500">{{ reservasi.kamar.namaKamar }}</p>
                         </td>
                         <td class="px-8 py-6 text-sm text-gray-600">
-                            {{ reservasi.tglCheckIn|date('d/m/y') }} - {{ reservasi.tglCheckOut|date('d/m/y') }}
+                            {{ reservasi.tanggalCheckIn|date('d/m/y') }} - {{ reservasi.tanggalCheckOut|date('d/m/y') }}
                         </td>
                         <td class="px-8 py-6">
                             {% if reservasi.pembatalan is not null %}

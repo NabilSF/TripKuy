@@ -3,147 +3,148 @@
 {% block title %}Reservasi - {{ hotel.namaHotel }}{% endblock %}
 
 {% block body %}
-{% include 'header.html.twig' %}
+<main class="max-w-6xl mx-auto px-4 pt-28 pb-20 font-sans text-gray-900">
+    <div class="mb-10">
+        <span class="bg-[#2aa090]/10 text-[#2aa090] px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Langkah 1: Pilih Kamar</span>
+        <h1 class="text-4xl font-black mt-4">{{ hotel.namaHotel }}</h1>
+        <p class="text-gray-500 mt-1"><i class="fas fa-map-marker-alt mr-2 text-[#2aa090]"></i>{{ hotel.alamat }}</p>
+    </div>
 
-<div class="bg-slate-50 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <form action="{{ path('reservasi_checkout', {'id': hotel.id}) }}" method="POST" id="bookingForm" class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div class="lg:col-span-2 space-y-4">
+            <h3 class="text-xl font-bold mb-4">Tipe Kamar Tersedia</h3>
 
-        {# Flash Messages #}
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="mb-6 bg-{{ label == 'success' ? 'green' : 'red' }}-100 border border-{{ label == 'success' ? 'green' : 'red' }}-200 text-{{ label == 'success' ? 'green' : 'red' }}-800 px-4 py-3 rounded-lg flex items-center gap-3">
-                    <i class="fas fa-{{ label == 'success' ? 'check-circle' : 'exclamation-circle' }}"></i>
-                    <span>{{ message }}</span>
-                </div>
-            {% endfor %}
-        {% endfor %}
+            {% for kamar in kamarList %}
+                <label class="room-card relative block bg-white border-2 border-gray-100 rounded-[2rem] p-6 cursor-pointer hover:border-[#2aa090]/50 transition-all duration-300">
+                    <input type="radio" name="tipe_kamar" value="{{ kamar.id }}"
+                           class="room-radio absolute top-6 right-6 w-6 h-6 accent-[#2aa090]"
+                           data-harga="{{ kamar.harga }}"
+                           {% if selectedRoom and selectedRoom.id == kamar.id %}checked{% endif %} required>
 
-        <div class="flex flex-col lg:flex-row gap-8">
-            <div class="flex-1">
-                <form id="reservationForm" method="POST" class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
-                    <div class="text-center mb-8 pb-6 border-b border-gray-100">
-                        <div class="text-4xl text-primary mb-4">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Formulir Reservasi</h2>
-                        <p class="text-gray-500 font-medium">{{ hotel.namaHotel }}</p>
-                    </div>
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div class="pr-10">
+                            <h4 class="text-xl font-bold">{{ kamar.namaKamar }}</h4>
+                            <p class="text-sm text-gray-500 line-clamp-2 mt-1">{{ kamar.deskripsi }}</p>
 
-                    <div class="space-y-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-600 mb-2">Check-in</label>
-                                <input type="date" id="checkin" name="checkin" value="{{ checkin }}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 outline-none" readonly>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-600 mb-2">Check-out</label>
-                                <input type="date" id="checkout" name="checkout" value="{{ checkout }}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 outline-none" readonly>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="md:col-span-2">
-                                <label class="block text-sm font-semibold text-gray-600 mb-2">Tipe Kamar</label>
-                                <select id="tipe_kamar" name="tipe_kamar" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary outline-none" required>
-                                    {% for kamar in kamarList %}
-                                        <option value="{{ kamar.id }}"
-                                                data-harga="{{ kamar.harga }}"
-                                                data-nama="{{ kamar.namaKamar }}"
-                                                {{ kamar.id == selectedRoom.id ? 'selected' : '' }}>
-                                            {{ kamar.namaKamar }} - Rp {{ kamar.harga|number_format(0, ',', '.') }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-600 mb-2">Jumlah Kamar</label>
-                                <input type="number" id="jumlah_kamar" name="jumlah_kamar" value="1" min="1" max="10" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary outline-none">
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full mt-10 bg-primary hover:bg-teal-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3">
-                        <i class="fas fa-lock"></i> Konfirmasi Pemesanan
-                    </button>
-                </form>
-            </div>
-
-            <div class="lg:w-1/3">
-                <div class="bg-white rounded-2xl shadow-xl p-6 sticky top-24 border border-gray-100">
-                    <h4 class="text-xl font-bold text-gray-900 mb-4">Ringkasan Biaya</h4>
-
-                    <div class="space-y-4">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-500">Durasi</span>
-                            <span class="font-semibold text-gray-800"><span id="display-nights">{{ nights }}</span> Malam</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-500">Kamar</span>
-                            <span id="display-room-name" class="font-semibold text-gray-800">{{ selectedRoom.namaKamar }}</span>
-                        </div>
-
-                        <div class="border-t border-dashed pt-4 mt-4">
-                            <div class="flex justify-between items-center text-sm mb-2">
-                                <span class="text-gray-600">Harga per Kamar</span>
-                                <span id="display-price-per-room" class="text-gray-900">Rp {{ selectedRoom.harga|number_format(0, ',', '.') }}</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t-2 border-gray-100">
-                                <span class="font-bold text-gray-800 text-lg">Total Bayar</span>
-                                <span id="display-total" class="font-bold text-primary text-2xl">
-                                    Rp {{ (selectedRoom.harga * nights)|number_format(0, ',', '.') }}
+                            <div class="flex gap-6 mt-4">
+                                <span class="flex items-center text-xs font-semibold text-gray-400">
+                                    <i class="fas fa-users mr-2 text-[#2aa090]"></i> {{ kamar.kapasitasOrang }} Orang
+                                </span>
+                                <span class="flex items-center text-xs font-semibold text-gray-400">
+                                    <i class="fas fa-bed mr-2 text-[#2aa090]"></i> Stok: {{ kamar.totalKamar }} Unit
                                 </span>
                             </div>
                         </div>
+                        <div class="md:text-right flex-shrink-0">
+                            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Mulai Dari</p>
+                            <p class="text-2xl font-black text-[#2aa090]">Rp {{ kamar.harga|number_format(0, ',', '.') }}</p>
+                            <p class="text-[10px] text-gray-400">/malam/kamar</p>
+                        </div>
+                    </div>
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="lg:col-span-1">
+            <div class="bg-gray-900 rounded-[2.5rem] p-8 sticky top-28 text-white shadow-2xl border border-gray-800">
+                <h3 class="text-xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-calendar-check mr-3 text-[#2aa090]"></i> Atur Pesanan
+                </h3>
+
+                <div class="space-y-5">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] font-black text-gray-500 uppercase mb-2 block">Check-in</label>
+                            <input type="date" name="checkin" id="checkin" value="{{ checkin }}"
+                                   class="w-full bg-gray-800 border-none rounded-xl text-xs py-3 focus:ring-2 focus:ring-[#2aa090]">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black text-gray-500 uppercase mb-2 block">Check-out</label>
+                            <input type="date" name="checkout" id="checkout" value="{{ checkout }}"
+                                   class="w-full bg-gray-800 border-none rounded-xl text-xs py-3 focus:ring-2 focus:ring-[#2aa090]">
+                        </div>
                     </div>
 
-                    <div class="mt-6 bg-blue-50 p-4 rounded-lg flex gap-3 items-start">
-                        <i class="fas fa-info-circle text-blue-500 mt-1"></i>
-                        <p class="text-[11px] text-blue-700 leading-relaxed">
-                            Kalkulasi di atas sudah termasuk pajak hotel dan biaya layanan 10%.
-                        </p>
+                    <div>
+                        <label class="text-[10px] font-black text-gray-500 uppercase mb-2 block">Jumlah Kamar</label>
+                        <div class="flex items-center bg-gray-800 rounded-xl px-4 py-2">
+                            <i class="fas fa-door-open text-gray-500 mr-3"></i>
+                            <input type="number" name="jumlah_kamar" id="jumlah_kamar" value="1" min="1" max="5"
+                                   class="bg-transparent border-none w-full text-sm focus:ring-0">
+                        </div>
                     </div>
                 </div>
+
+                <div class="mt-8 pt-8 border-t border-gray-800 space-y-3">
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span>Durasi</span>
+                        <span id="displayNights">0 Malam</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2">
+                        <span class="text-sm font-bold">Estimasi Total</span>
+                        <span id="displayTotal" class="text-2xl font-black text-[#2aa090]">Rp 0</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full mt-8 py-5 bg-[#2aa090] hover:bg-white hover:text-black text-white font-black rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-[#2aa090]/20">
+                    LANJUT CHECKOUT <i class="fas fa-arrow-right ml-2"></i>
+                </button>
             </div>
         </div>
-    </div>
-</div>
+    </form>
+</main>
+
+<style>
+    /* Styling untuk card yang dipilih */
+    .room-radio:checked + div {
+        /* CSS ini opsional jika Anda ingin styling tambahan saat terpilih */
+    }
+    .room-card:has(.room-radio:checked) {
+        border-color: #2aa090;
+        background-color: rgba(42, 160, 144, 0.05);
+        box-shadow: 0 10px 30px -10px rgba(42, 160, 144, 0.2);
+    }
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const roomSelect = document.getElementById('tipe_kamar');
+    const checkinInput = document.getElementById('checkin');
+    const checkoutInput = document.getElementById('checkout');
     const qtyInput = document.getElementById('jumlah_kamar');
-    const nights = parseInt("{{ nights }}");
+    const displayNights = document.getElementById('displayNights');
+    const displayTotal = document.getElementById('displayTotal');
+    const radios = document.querySelectorAll('.room-radio');
 
-    const displayRoomName = document.getElementById('display-room-name');
-    const displayPricePerRoom = document.getElementById('display-price-per-room');
-    const displayTotal = document.getElementById('display-total');
+    function calculate() {
+        // 1. Hitung Malam
+        const start = new Date(checkinInput.value);
+        const end = new Date(checkoutInput.value);
+        const diffTime = end - start;
+        const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    function formatRupiah(number) {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(number);
-    }
+        const nightsValid = nights > 0 ? nights : 0;
+        displayNights.innerText = nightsValid + ' Malam';
 
-    function updateSummary() {
-        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
-        const price = parseInt(selectedOption.getAttribute('data-harga'));
-        const name = selectedOption.getAttribute('data-nama');
+        // 2. Ambil Harga Kamar yang dipilih
+        let harga = 0;
+        radios.forEach(r => {
+            if(r.checked) harga = parseInt(r.dataset.harga);
+        });
+
+        // 3. Kalkulasi Total
         const qty = parseInt(qtyInput.value) || 1;
+        const total = harga * nightsValid * qty;
 
-        const total = price * nights * qty;
-
-        displayRoomName.innerText = name;
-        displayPricePerRoom.innerText = formatRupiah(price);
-        displayTotal.innerText = formatRupiah(total);
+        // 4. Update Tampilan
+        displayTotal.innerText = 'Rp ' + total.toLocaleString('id-ID');
     }
 
-    // Jalankan update saat ada perubahan input
-    roomSelect.addEventListener('change', updateSummary);
-    qtyInput.addEventListener('input', updateSummary);
+    // Event Listeners
+    [checkinInput, checkoutInput, qtyInput].forEach(el => el.addEventListener('change', calculate));
+    radios.forEach(r => r.addEventListener('change', calculate));
+
+    // Jalankan kalkulasi pertama kali
+    calculate();
 });
 </script>
-
-{% include 'footer.html.twig' %}
 {% endblock %}
